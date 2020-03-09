@@ -5,4 +5,4 @@ This repositiry contains -
 * Code for predicting identities in new datasets. The datasets could be gene expression patterns, multi-cell calcium imaging or whole-brain image stacks
 * Code for building new atlas based on manually annotated datasets
 * Raw datasets used in the paper as well as human annotations</li>
-<img align = "right" width = "120" height = "160" src = "https://github.com/shiveshc/CRF_Cell_ID/extra/readme_img.jpg">
+<img align = "right" width = "120" height = "160" src = "shiveshc/CRF_Cell_ID/extra/readme_img.jpg">
