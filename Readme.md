@@ -1,11 +1,8 @@
-<h1>CRF Cell ID</h1>
-<p>A stuctured prediction framework for automatically annotating biological identities of cells in brain images.</p>
+# CRF Cell ID
+A stuctured prediction framework for automatically annotating biological identities of cells in brain images.</p>
 
-<p>This repositiry contains - 
-  <ol>
-    <li>Code for predicting identities in new datasets. The datasets could be gene expression patterns, multi-cell calcium imaging or whole-brain image stacks</li>
-    <li>Code for building new atlas based on manually annotated datasets</li>
-    <li>Raw datasets used in the paper as well as human annotations</li>
-  </ol>
-  <img src = "CRF_Cell_IF/extra/readme_img.jpg" align = "right" style="width:300px;height:400px;>
-</p>
+This repositiry contains - 
+* Code for predicting identities in new datasets. The datasets could be gene expression patterns, multi-cell calcium imaging or whole-brain image stacks
+* Code for building new atlas based on manually annotated datasets
+* Raw datasets used in the paper as well as human annotations</li>
+<img align = "right" width = "120" height = "160" src = "https://github.com/shiveshc/CRF_Cell_ID/extra/readme_img.jpg">
