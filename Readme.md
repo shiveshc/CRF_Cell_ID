@@ -7,5 +7,5 @@
     <li>Code for building new atlas based on manually annotated datasets</li>
     <li>Raw datasets used in the paper as well as human annotations</li>
   </ol>
-  <img src = "xyz.png" align = "right">
+  <img src = "extras/readme_img.png" align = "right">
 </p>
