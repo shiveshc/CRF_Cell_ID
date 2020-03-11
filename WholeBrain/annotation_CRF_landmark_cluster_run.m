@@ -11,7 +11,7 @@
 % 3. num - a variable to keep track of iterations if considering missing
 %          cells. If not running iterations set to 1
 
-function annotation_CRF_landmark(data,numLabelRemove)
+function annotation_CRF_landmark(data,numLabelRemove,num)
 rng shuffle
 addpath(genpath('C:\Users\Shivesh\Dropbox (GaTech)\PhD\GlobalBrainCode\GlobalBrainTrackingNew\functions\Joint_tracking\UGM'))
 
