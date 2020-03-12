@@ -3,7 +3,7 @@
 <p>
   This software was developed for automatically annotating biological identities of cells in dense brain images. 
   To learn about details of the method, please read the paper.
-</p>
+</p>  
 <p>
   This repository contains - 
   <ol>
