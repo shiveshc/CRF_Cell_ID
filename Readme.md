@@ -12,8 +12,11 @@
     <li>Raw datasets used in the paper and ground-truth annotations</li>
 </p>
 <p>
-  A detailed user-guide on using the framework coming soon.
+A detailed user-guide on using the framework coming soon.
 </p>
+	
+	
+	
   
 
   
