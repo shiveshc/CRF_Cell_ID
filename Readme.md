@@ -1,8 +1,8 @@
 <img src = "extra/readme_img_v2.jpg" width = "40%" align = "right">
 <h1>CRF Cell ID</h1>
 <p>
-  A framework for automatically annotating biological identities of cells in brain images. For more details on the method
-  read the paper.
+  This software was developed for automatically annotating biological identities of cells in dense brain images. 
+  To learn about details of the method, please read the paper.
 </p>
 <p>
   This repository contains - 
@@ -11,3 +11,9 @@
     <li>Code for building new atlas based on manually annotated datasets</li>
     <li>Raw datasets used in the paper and ground-truth annotations</li>
 </p>
+<p>
+  A detailed user-guide on using the framework coming soon.
+</p>
+  
+
+  
