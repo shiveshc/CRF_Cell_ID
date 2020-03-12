@@ -62,7 +62,7 @@ DV = [];
 if strcmp(application,'LandmarkStrain')
     if or(~exist('landmark_names','var'),~exist('landmark_to_neuron_map','var'))
         disp('Please re-run "preprocess_landmark_data.m" and specify landmark cell names')
-        quit
+        return
     else
         [PA,LR,DV] = generate_coordinate_axes_landmark(application,mu_r,landmark_to_neuron_map,axes_param,landmark_names,ind_PCA,specify_PA);
     end
