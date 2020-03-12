@@ -11,15 +11,15 @@
 % 3. num - a variable to keep track of iterations if considering missing
 %          cells. If not running iterations set to 1
 
-function annotation_CRF_landmark(data,numLabelRemove)
+function annotation_CRF_landmark(application,data,out_file,node_pot_uniform,numLabelRemove)
 rng shuffle
-addpath(genpath('C:\Users\Shivesh\Dropbox (GaTech)\PhD\GlobalBrainCode\GlobalBrainTrackingNew\functions\Joint_tracking\UGM'))
+addpath(genpath('CRF_Cell_ID\UGM'))
 
 %%% load image data and atlas data
 % Change input directories here for your data.
 % Static atlas is 'data_neuron_relationship.mat' file provided
-load(['C:\Users\Shivesh\Dropbox (GaTech)\PhD\GlobalBrainCode\GlobalBrainTrackingNew\functions\Annotation_CRF\PACE\ChemStimulus\20190511_AML32Unc47_OP50\',data,'.mat'])
-load('C:\Users\Shivesh\Dropbox (GaTech)\PhD\GlobalBrainCode\GlobalBrainTrackingNew\functions\Annotation_CRF\PACE\ChemStimulus\20190511_AML32Unc47_OP50\data_neuron_relationship.mat')
+load(['CRF_Cell_ID\application',data,'.mat'])
+load('CRF_Cell_ID\util\data_neuron_relationship_annotation_updated.mat')
 
 %%% remove missing cells from atlas
 dont_remove = zeros(size(landmark_names,1),1);
@@ -55,105 +55,21 @@ Y_rot(remove_index,:) = [];
 Z_rot(remove_index,:) = [];
 X_rot_norm(remove_index,:) = [];
 
-%%% generate coordinate axes in image
-mu_r_centered = mu_r - repmat(mean(mu_r),size(mu_r,1),1);
-[coeff,score,latent] = pca(mu_r_centered);
-if ind_PCA == 1
-    PA = coeff(:,1)';
-    PA = PA/norm(PA);
-    LR = coeff(:,3)';
-    LR = LR/norm(LR);
-    DV = coeff(:,2)';
-    DV = DV/norm(DV);
-    
-    RMEL_neuron = landmark_to_neuron_map(find(strcmp('RMEL',landmark_names)),1);
-    RMER_neuron = landmark_to_neuron_map(find(strcmp('RMER',landmark_names)),1);
-    RMED_neuron = landmark_to_neuron_map(find(strcmp('RMED',landmark_names)),1);
-    RMEV_neuron = landmark_to_neuron_map(find(strcmp('RMEV',landmark_names)),1);
-    RIS_neuron = landmark_to_neuron_map(find(strcmp('RIS',landmark_names)),1);
-    if ~isempty(RIS_neuron)
-        if (mu_r_centered(RMER_neuron,:)-mu_r_centered(RIS_neuron,:))*PA' < 0
-            PA = -PA;
-        end
+%%% generate coordinate axes in head
+PA = [];
+LR = [];
+DV = [];
+if strcmp(application,'LandmarkStrain')
+    if or(~exist('landmark_names','var'),~exist('landmark_to_neuron_map','var'))
+        disp('Please re-run "preprocess_landmark_data.m" and specify landmark cell names')
+        quit
     else
-        DD_neuron = landmark_to_neuron_map(find(strcmp('DD1',landmark_names)),1);
-        if (mu_r_centered(RMER_neuron,:)-mu_r_centered(DD_neuron,:))*PA' < 0
-            PA = -PA;
-        end
-    end
-    if (mu_r_centered(RMER_neuron,:)-mu_r_centered(RMEL_neuron,:))*LR' < 0
-        LR = -LR;
-    end
-    if cross(PA,LR)*DV' < 0
-        DV = -DV;
+        [PA,LR,DV] = generate_coordinate_axes_landmark(application,mu_r,landmark_to_neuron_map,axes_param,landmark_names,ind_PCA,specify_PA);
     end
 else
-    if specify_PA
-        A_neuron = axes_neurons_to_neuron_map(1,1);P_neuron = axes_neurons_to_neuron_map(2,1);L_neuron = axes_neurons_to_neuron_map(3,1);
-        R_neuron = axes_neurons_to_neuron_map(4,1);D_neuron = axes_neurons_to_neuron_map(5,1);V_neuron = axes_neurons_to_neuron_map(6,1);
-        PA = coeff(:,1)';
-        PA = PA/norm(PA);
-        if L_neuron ~= 0 && R_neuron ~= 0
-            LR = mu_r_centered(R_neuron,:) - mu_r_centered(L_neuron,:); % LR axis based on L,R neurons
-            LR = LR/norm(LR);
-
-            fun = @(x)-(x(1)*LR(1,1) + x(2)*LR(1,2) + LR(1,3))^2/(x(1)^2 + x(2)^2 + 1^2);
-            Aeq = PA(1,1:2);
-            beq = -PA(1,3);
-            x0 = LR(1,1:2);
-            LR = fmincon(fun,x0,[],[],Aeq,beq);   % LR axis (perperndicular to PA axis and in direction of LR neurons)
-            LR = [LR,1];
-            LR = LR/norm(LR);
-
-            % DV axis (perperndicular to LR and PA axis)
-            A = [PA(1,1:2);LR(1,1:2)];
-            b = [-PA(1,3);-LR(1,3)];
-            DV = inv(A'*A)*A'*b;           
-            DV = [DV',1];
-            DV = DV/norm(DV);
-
-            if (mu_r_centered(A_neuron,:)-mu_r_centered(P_neuron,:))*PA' < 0
-                PA = -PA;
-            end
-            if (mu_r_centered(R_neuron,:)-mu_r_centered(L_neuron,:))*LR' < 0
-                LR = -LR;
-            end
-            if cross(PA,LR)*DV' < 0
-                DV = -DV;
-            end
-        end
-    else
-        A_neuron = axes_neurons_to_neuron_map(1,1);P_neuron = axes_neurons_to_neuron_map(2,1);L_neuron = axes_neurons_to_neuron_map(3,1);
-        R_neuron = axes_neurons_to_neuron_map(4,1);D_neuron = axes_neurons_to_neuron_map(5,1);V_neuron = axes_neurons_to_neuron_map(6,1);
-        LR = mu_r_centered(R_neuron,:) - mu_r_centered(L_neuron,:); % LR axis based on L,R
-        LR = LR/norm(LR);
-        if A_neuron ~= 0 && P_neuron ~= 0
-            PA = coeff(:,1)';
-            PA = PA/norm(PA);
-            fun = @(x)-(x(1)*PA(1,1) + x(2)*PA(1,2) + PA(1,3))^2/(x(1)^2 + x(2)^2 + 1^2);
-            Aeq = LR(1,1:2);
-            beq = -LR(1,3);
-            x0 = PA(1,1:2);
-            PA = fmincon(fun,x0,[],[],Aeq,beq);   % PA axis (perperndicular to LR and in direction of PC1)
-            PA = [PA,1];
-            PA = PA/norm(PA);
-
-            % DV axis (perperndicular to LR and PA axis)
-            A = [PA(1,1:2);LR(1,1:2)];
-            b = [-PA(1,3);-LR(1,3)];
-            DV = inv(A'*A)*A'*b;           
-            DV = [DV',1];
-            DV = DV/norm(DV);
-
-            if (mu_r_centered(A_neuron,:)-mu_r_centered(P_neuron,:))*PA' < 0
-                PA = -PA;
-            end
-            if cross(PA,LR)*DV' < 0
-                DV = -DV;
-            end
-        end
-    end
+    [PA,LR,DV] = generate_coordinate_axes_other_with_landmarks(application,mu_r,axes_param,axes_neurons_to_neuron_map,ind_PCA,specify_PA);
 end
+disp('Created axes')
 % take neurons coordinates to AP, LR, DV axis
 X = mu_r_centered*PA';
 Y = mu_r_centered*LR';
@@ -197,8 +113,6 @@ edgeStruct = UGM_makeEdgeStruct(adj,nStates);
 %%% create node potentials. Two methods can be used to initialize node
 %%% potentials. 1) Uniform probability of each node taking each label in
 %%% atlas. 2) Potential based on distance along AP axis
-node_pot_uniform = 0;
-
 if node_pot_uniform == 1
     node_pot =  ones(nNodes,nStates);
 else
@@ -208,6 +122,7 @@ else
         node_pot(i,:) = diag(exp(-((ones(size(X_rot_norm))*X_norm(i,1) - X_rot_norm)*(ones(size(X_rot_norm))*X_norm(i,1) - X_rot_norm)')/(2*loc_sigma^2)))';
     end
 end
+disp('created node potential')
 
 %%% create edge potentials
 lambda_PA = 0;
@@ -252,14 +167,18 @@ for i = 1:edgeStruct.nEdges
     pot = pot - diag(diag(pot)) + 0.001*eye(size(pot,1)); 
     edge_pot(:,:,i) = pot;
 end
+disp('created edge potentials')
 
 %%% clamp potential based on landmarks
 clamped = zeros(nNodes,1);
-for i = 1:size(landmark_to_neuron_map,1)
-    clamped(landmark_to_neuron_map(i,1),1) = find(strcmp(Neuron_head,landmark_names{i,1}));
+if exist('landmark_to_neuron_map','var')
+    for i = 1:size(landmark_to_neuron_map,1)
+        clamped(landmark_to_neuron_map(i,1),1) = find(strcmp(Neuron_head,landmark_names{i,1}));
+    end
 end
 
 %%% Optimize graphical model using Loopy Belief Propagation
+disp('starting optimization')
 [nodeBel,edgeBel,logZ] = UGM_Infer_Conditional(node_pot,edge_pot,edgeStruct,clamped,@UGM_Infer_LBP);
 conserved_nodeBel = nodeBel; %node belief matrix to maintain marginal probabilities after clamping in subsequent steps
 % optimal_decode = UGM_Decode_Conditional(node_pot,edge_pot,edgeStruct,clamped,@UGM_Decode_LBP);
@@ -267,10 +186,12 @@ conserved_nodeBel = nodeBel; %node belief matrix to maintain marginal probabilit
 curr_labels = nodeBel_sort_index(:,1);
 [PA_score,LR_score,DV_score,geodist_score,tot_score] = consistency_scores(nNodes,curr_labels,X,Y,Z,PA_matrix,LR_matrix,DV_matrix,geo_dist,geo_dist_r);
 
-
 %%% handle duplicate assignments 
+disp('resolving duplicates')
 orig_state_array = [1:1:size(Neuron_head,1)]';
-clamped_neurons = landmark_to_neuron_map;
+if exist('landmark_to_neuron_map','var')
+    clamped_neurons = landmark_to_neuron_map;
+end
 node_label = duplicate_labels(curr_labels,X,Y,Z,PA_matrix,LR_matrix,DV_matrix,geo_dist,geo_dist_r,thisimage_r,mu_r,Neuron_head,lambda_geo,clamped_neurons);
 cnt = 2;
 while find(node_label(:,1) == 0)
@@ -360,55 +281,28 @@ while find(node_label(:,1) == 0)
 end
 
 %%% save experiments results
-experiments_file = ['/gpfs/pace1/project/pchbe2/schaudhary9/Annotation/ChemStimulus/20190615_AML32_unc47CyoFP_OP50/Results/experiments_',data,'_',num2str(numLabelRemove),'_',num2str(num),'.mat'];
-if exist(experiments_file)
-    load(experiments_file)
-    num_exp = size(experiments,2);
-    
-    experiments(num_exp+1).K = K;
-    experiments(num_exp+1).lambda_PA = lambda_PA;
-    experiments(num_exp+1).lambda_LR = lambda_LR;
-    experiments(num_exp+1).lambda_DV = lambda_DV;
-    experiments(num_exp+1).lambda_geo = lambda_geo;
-    experiments(num_exp+1).PA_score = PA_score;
-    experiments(num_exp+1).LR_score = LR_score;
-    experiments(num_exp+1).DV_score = DV_score;
-    experiments(num_exp+1).geodist_score = geodist_score;
-    experiments(num_exp+1).tot_score = tot_score;
-%     experiments(num_exp+1).landmark_match_score = landmark_match_score;
-    experiments(num_exp+1).numLabelRemove = numLabelRemove;
-    experiments(num_exp+1).loc_sigma = loc_sigma;
-    experiments(num_exp+1).lambda_angle = lambda_angle;
-    experiments(num_exp+1).node_label = node_label;
-%     experiments(num_exp+1).mu_r = mu_r;
-%     experiments(num_exp+1).thisimage_r = thisimage_r;
-    experiments(num_exp+1).Neuron_head = Neuron_head;
-%     experiments(num_exp+1).landmarks_used = rand_selection;
-%     experiments(num_exp+1).landmark_names = landmark_names;
-%     experiments(num_exp+1).landmark_to_neuron_map = landmark_to_neuron_map;
-    save(experiments_file,'experiments')
-else
-    experiments = struct();
-    experiments(1).K = K;
-    experiments(1).lambda_PA = lambda_PA;
-    experiments(1).lambda_LR = lambda_LR;
-    experiments(1).lambda_DV = lambda_DV;
-    experiments(1).lambda_geo = lambda_geo;
-    experiments(1).PA_score = PA_score;
-    experiments(1).LR_score = LR_score;
-    experiments(1).DV_score = DV_score;
-    experiments(1).geodist_score = geodist_score;
-    experiments(1).tot_score = tot_score;
+disp('saving results')
+experiments = struct();
+experiments(1).K = K;
+experiments(1).lambda_PA = lambda_PA;
+experiments(1).lambda_LR = lambda_LR;
+experiments(1).lambda_DV = lambda_DV;
+experiments(1).lambda_geo = lambda_geo;
+experiments(1).lambda_angle = lambda_angle;
+experiments(1).PA_score = PA_score;
+experiments(1).LR_score = LR_score;
+experiments(1).DV_score = DV_score;
+experiments(1).geodist_score = geodist_score;
+experiments(1).tot_score = tot_score;
 %     experiments(1).landmark_match_score = landmark_match_score;
-    experiments(1).numLabelRemove = numLabelRemove;
-    experiments(1).loc_sigma = loc_sigma;
-    experiments(1).lambda_angle = lambda_angle;
-    experiments(1).node_label = node_label;
+experiments(1).numLabelRemove = numLabelRemove;
+experiments(1).loc_sigma = loc_sigma;
+
+experiments(1).node_label = node_label;
 %     experiments(1).mu_r = mu_r;
 %     experiments(1).thisimage_r = thisimage_r;
-    experiments(1).Neuron_head = Neuron_head;
+experiments(1).Neuron_head = Neuron_head;
 %     experiments(1).landmarks_used = rand_selection;
 %     experiments(1).landmark_names = landmark_names;
 %     experiments(1).landmark_to_neuron_map = landmark_to_neuron_map;
-    save(experiments_file,'experiments')
-end
+save(out_file,'experiments')
