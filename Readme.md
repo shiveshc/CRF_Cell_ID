@@ -5,7 +5,7 @@
   To learn about details of the method, please read the paper.
 </p>
 <p>
-	A detailed guide on usign the framework <b>coming soon</b>.
+	A detailed guide on using the framework <b>coming soon</b>.
 </p>
 <p>
   This repository contains - 
