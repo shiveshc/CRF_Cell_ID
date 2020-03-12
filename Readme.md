@@ -2,7 +2,7 @@
 <h1>CRF Cell ID</h1>
 <p>
   This software was developed for automatically annotating biological identities of cells in dense brain images. 
-  To learn about details of the method, please read the <a href="https://www.biorxiv.org/content/10.1101/2020.03.10.986356v1>paper</a>.
+  To learn about details of the method, please read the <a href="https://www.biorxiv.org/content/10.1101/2020.03.10.986356v1">paper</a>.
 </p>
 <p>
 	A detailed guide on using the framework <b>coming soon</b>.
