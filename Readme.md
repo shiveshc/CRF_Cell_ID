@@ -12,6 +12,26 @@ This repository contains -
 3. Raw datasets used in the paper, ground-truth annotations, and codes for reproducing results
 
 <img src = "extra/video1_gif.gif" width=100% align="center">
+
+# Installation
+Please make sure to keep the name of the directory as `CRF_Cell_ID` so that walkthrough instructions can be run without changing any paths.
+### Installing with Git Shell
+```
+git clone https://github.com/shiveshc/CRF_Cell_ID.git
+```
+### Installing online
+Go to https://github.com/shiveshc/CRF_Cell_ID, click on download button on top right corner.
+
+### Dependencies
+1. MATLAB 2018b
+2. UGM Toolbox available at https://www.cs.ubc.ca/~schmidtm/Software/UGM.html
+3. CPD registration method at https://sites.google.com/site/myronenko/research/cpd (optional, required only for comparisons)
+
+### Description of respository contents
+1. 
+
+
+
 	
 	
 	
