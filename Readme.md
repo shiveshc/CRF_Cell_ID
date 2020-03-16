@@ -7,7 +7,9 @@ To learn about details of the method, please read the <a href="https://www.biorx
 This repository contains - 
 1. Code for predicting identities in new datasets such as gene reporter expression, multi-cell calcium imaging or whole-brain imaging stacks
 2. Code for building new atlas based on manually annotated datasets
-3. Raw datasets used in the paper and ground-truth annotations and codes for reproducing results
+3. Raw datasets used in the paper, ground-truth annotations in datasets and codes for reproducing results
+
+<img src = "extra/readme_img_v2.jpg" width=50%>
 	
 	
 	
