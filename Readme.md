@@ -20,7 +20,7 @@ Please make sure to keep the name of the directory as `CRF_Cell_ID` so that walk
 git clone https://github.com/shiveshc/CRF_Cell_ID.git
 ```
 ### Installing online
-Click on `clone or download` button on top right corner and `Download ZIP`
+Click on `Clone or download` button on top right corner and `Download ZIP`
 
 ### Dependencies
 1. MATLAB 2018b
@@ -58,6 +58,37 @@ UGM and CPD are provided in the repository so there is no need to download them 
 7. __Run_NeuroPAL__ : ccontains codes for predicting cell identities in `NeuroPAL` dataset, reproducing prediction comparison results for different methods. These methods include `Color_Registration`, `CRF`, `CRF_Color`, `CRF_Registration`, and `CRF_Color_Registration`. Additionally registration based matching can be performed using `registration_based_matching_multi` in `utils_NeuroPAL` folder.
 8. __Run_SyntheticData__ : contains code for predicting identities in synthetic datasets, analyze the effect of position noise on accuracy
 9. __UGM__ : contains the undirected graphical models library used to formulate and optimize CRF model
+
+# Step-by-Step Walkthrough
+Here we provide a detailed step-by-step walkthrough of the framework.
+### Reading image data
+The main function for reading image data is `read_tif` in `Main` folder.
+```
+Inputs:
+ style		'one' if the 3D image stack to be read is saved as one .tif file or 
+ 		'separate' if individual z-planes are saved as separate images.
+ input		image path if style is 'one' e.g. 'CRF_Cell_ID\test_data\img1.tif' or
+ 		image directory path if style is 'separate' e.g. 'CRF_Cell_ID\test_data\img2'
+		
+Outputs:
+ img		3d image stack variable
+```
+e.g. we'll read `sample_data1` in `sample_run` folder. Two different channels are present in `sample_data1` as `img1` and `img2`. Each folder contains z-planes saved separately.
+
+```
+img1 = read_tif('separate','sample_run\sample_data1\img1')
+img2 = read_tif('separate','sample_run\sample_data1\img2')
+```
+visualizing the 2 channels, output should look like
+```
+figure,imshow(max(mat2gray(img1),[],3))
+caxis([0,0.3])
+figure,imshow(max(mat2gray(img2),[],3))
+caxis([0,0.3])
+```
+
+
+
 
 
 	
