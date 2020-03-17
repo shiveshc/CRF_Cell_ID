@@ -61,7 +61,14 @@ UGM and CPD are provided in the repository so there is no need to download them 
 
 # Step-by-Step Walkthrough
 Here we provide a detailed step-by-step walkthrough of the framework.
-### Reading image data
+
+First change current working directory in MATLAB to the cloned `CRF_Cell_ID` folder and add `Main` to path
+```
+cd '\CRF_Cell_ID' % provide full path of CRF_Cell_ID
+addpath('Main')
+```
+
+### 1. Read image data
 The main function for reading image data is `read_tif` in `Main` folder.
 ```
 Inputs:
@@ -76,17 +83,17 @@ Outputs:
 e.g. we'll read `sample_data1` in `sample_run` folder. Two different channels are present in `sample_data1` as `img1` and `img2`. Each folder contains z-planes saved separately.
 
 ```
-img1 = read_tif('separate','sample_run\sample_data1\img1')
-img2 = read_tif('separate','sample_run\sample_data1\img2')
+img1 = read_tif('separate','sample_run\sample_data1\img1');
+img2 = read_tif('separate','sample_run\sample_data1\img2');
 ```
 visualizing the 2 channels, output should look like
 ```
-figure,imshow(max(mat2gray(img1),[],3))
+figure,imshow(max(mat2gray(img1),[],3),'border','tight')
 caxis([0,0.3])
-figure,imshow(max(mat2gray(img2),[],3))
+figure,imshow(max(mat2gray(img2),[],3),'border','tight')
 caxis([0,0.3])
 ```
-
+<img src = "extra/sample_data1_img1.jpg" width=50% ><img src = "extra/sample_data1_img2.jpg" width=50% >
 
 
 
