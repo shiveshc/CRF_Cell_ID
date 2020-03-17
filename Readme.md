@@ -20,15 +20,22 @@ Please make sure to keep the name of the directory as `CRF_Cell_ID` so that walk
 git clone https://github.com/shiveshc/CRF_Cell_ID.git
 ```
 ### Installing online
-Go to https://github.com/shiveshc/CRF_Cell_ID, click on download button on top right corner.
+Click on `clone or download` button on top right corner and `Download ZIP`
 
 ### Dependencies
 1. MATLAB 2018b
-2. UGM Toolbox available at https://www.cs.ubc.ca/~schmidtm/Software/UGM.html
-3. CPD registration method at https://sites.google.com/site/myronenko/research/cpd (optional, required only for comparisons)
+2. <a href = "https://www.cs.ubc.ca/~schmidtm/Software/UGM.html">UGM Toolbox</a>
+3. <a href = "https://sites.google.com/site/myronenko/research/cpd">CPD</a> registration (optional, required only for comparisons)
+4. <a href = "https://github.com/Vaa3D">Vaa3D</a> (optional, required only for visualizing ground-truth annotations)
+
+These dependencies except MATLAB and Vaa3D are provided in the repository so no need to download them individually. However please consider citing them.
 
 ### Description of respository contents
-1. 
+1. __Datasets__ : contains all raw datasets used in the <a href="https://www.biorxiv.org/content/10.1101/2020.03.10.986356v1">paper</a> and their ground-truth annotations.
+   - __ComplexOrientations__ : contains 7 datasets of animals imaged with varying rotations along AP axis. `marker_names.xlsx` files in these folders record the names and IDs of manually annotated cells. `markers` file is a Vaa3D marker annotation file which can be loaded in Vaa3D to visualize all cells in the image stack. Folder with suffix `_B`, `_C` or `_mN` denote BFP, CyOFP and mNeptune channels
+   - __GeneExpressionAnalysis__ : contains 21 datasets of animals used in gene-expression analysis. `.tif` folders contain raw z-planes of 3D stacks acquired in two channeles: pan-neuronal RFP and GFP
+   - __MultiCellCalciumImaging__ : contains 31 datasets of animals used in multi-cell calcium imaging experiments. `.tif` folders contain raw z-planes of 3D stacks acquired in one channeles: GFP
+   - __NeuroPAL__ : contains 9 datasets of NeuroPAL animals.`marker_names.xlsx` files in these folders record the names and IDs of manually annotated cells. `markers` file is a Vaa3D marker annotation file.
 
 
 
