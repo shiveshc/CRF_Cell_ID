@@ -3,7 +3,7 @@
 %%%% saved separately
 
 
-function img = read_tif(input,style)
+function img = read_tif(style,input)
 if nargin < 2
     ["Please specify both input and style arguments"]
 else
