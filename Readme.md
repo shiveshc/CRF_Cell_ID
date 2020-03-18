@@ -86,7 +86,7 @@ e.g. we'll read `sample_data1` in `sample_run` folder. Two different channels ar
 img1 = read_tif('separate','sample_run\sample_data1\img1');
 img2 = read_tif('separate','sample_run\sample_data1\img2');
 ```
-visualizing the 2 channels, output should look like
+visualizing the max-projection of the two channels, output should look like below
 ```
 figure,imshow(max(mat2gray(img1),[],3),'border','tight')
 caxis([0,0.3])
@@ -94,6 +94,13 @@ figure,imshow(max(mat2gray(img2),[],3),'border','tight')
 caxis([0,0.3])
 ```
 <img src = "extra/sample_data1_img1.jpg" width=50% ><img src = "extra/sample_data1_img2.jpg" width=50% >
+
+We'll predict identities of cells in the channel on the right and will use the channel on the left as landmark channel i.e. channel in which identities of cells are known. In practice `CRF_Cell_ID` supports any number of landmarks channels as will be shown below. Further, it is not necessary to know that the identities of all cells in a landmark channel. Thus `CRF_Cell_ID` can utilize information from multiple channels.
+
+### 2. Preprocess data for annotation
+In this step we'll detect cells in all channels, specify landmark information, generate a coordinate axes in head and generate a data file that will we used as input in the next step. The main script to do this is `preprocess_data`
+
+
 
 
 
