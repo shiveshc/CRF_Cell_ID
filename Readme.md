@@ -100,16 +100,16 @@ We'll predict identities of cells in the channel on the right and will use the c
 ### 2. Preprocess data for annotation
 In this step we'll 1) detect all cells in each channel read in previous step. 2) specify landmark information 3) generate a coordinate axes in head, and 4) generate a data file that will be used as input in the next step. 
 
-The main script to do this is `preprocess_data`
+The main script to do this is `preprocess_data` in `Main`
 ```
 Inputs :
-out_folder		directory path where the output data file be saved
-data_name		name of the output data file
-img1			image channel in which identities of cells are to be predicted
-varargin		variable number of image channels that can be used as landmark channels
+ out_folder		directory path where the output data file be saved
+ data_name		name of the output data file
+ img1			image channel in which identities of cells are to be predicted
+ varargin		variable number of image channels that can be used as landmark channels
 
 Outputs :
-data file		.mat data file that will be used as input in next step
+ data file		.mat data file that will be used as input in next step
 ```
 
 
