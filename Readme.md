@@ -95,10 +95,22 @@ caxis([0,0.3])
 ```
 <img src = "extra/sample_data1_img1.jpg" width=50% ><img src = "extra/sample_data1_img2.jpg" width=50% >
 
-We'll predict identities of cells in the channel on the right and will use the channel on the left as landmark channel i.e. channel in which identities of cells are known. In practice `CRF_Cell_ID` supports any number of landmarks channels as will be shown below. Further, it is not necessary to know that the identities of all cells in a landmark channel. Thus `CRF_Cell_ID` can utilize information from multiple channels.
+We'll predict identities of cells in the channel on the right and will use the channel on the left as landmark channel i.e. channel in which identities of cells are known. In practice `CRF_Cell_ID` supports any number of landmarks channels as will be shown below. Further, it is not necessary to know that the identities of all cells in a landmark channel. Thus `CRF_Cell_ID` easily integrates available information from multiple channels.
 
 ### 2. Preprocess data for annotation
-In this step we'll detect cells in all channels, specify landmark information, generate a coordinate axes in head and generate a data file that will we used as input in the next step. The main script to do this is `preprocess_data`
+In this step we'll 1) detect all cells in each channel read in previous step. 2) specify landmark information 3) generate a coordinate axes in head, and 4) generate a data file that will be used as input in the next step. 
+
+The main script to do this is `preprocess_data`
+```
+Inputs :
+out_folder		directory path where the output data file be saved
+data_name		name of the output data file
+img1			image channel in which identities of cells are to be predicted
+varargin		variable number of image channels that can be used as landmark channels
+
+Outputs :
+data file		.mat data file that will be used as input in next step
+```
 
 
 
