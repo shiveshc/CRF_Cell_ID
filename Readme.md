@@ -134,7 +134,7 @@ Enter thresh_parameter value between 0-100. Higher values for detecting few but 
 Enter 'y' if accept thresh_parameter else enter 'n' -
 ```
 
-We'll enter 'n' becuase we are not satisfied with the chosen `thresh_parameter` and lower the value to detect more cells. After a couple of trial and errors we select 99.85 as the parameter value. In this case the image should like
+We'll enter 'n' becuase we are not satisfied with the chosen `thresh_parameter` and lower the value to detect more cells. After a couple of trial and errors we select 99.83 as the parameter value. In this case the image should like
 
 <img src = "extra/thresh_param_2.jpg" width=50% >
 
@@ -144,32 +144,67 @@ Enter 'y' if accept thresh_parameter else enter 'n' -'y'
 
 ans =
 
-      199990           3
+      228643           3
 
 
 ans =
 
-    'iter:1, likelihood:-12.3781, error:0.34715'
+    'iter:1, likelihood:-12.5171, error:0.34564'
 
 
 ans =
 
-    'iter:2, likelihood:-12.3981, error:0.32724'
+    'iter:2, likelihood:-12.5379, error:0.32442'
 
 
 ans =
 
-    'iter:3, likelihood:-12.4095, error:0.32275'
+    'iter:3, likelihood:-12.5495, error:0.31976'
 
 
 ans =
 
-    'iter:4, likelihood:-12.416, error:0.32108'
+    'iter:4, likelihood:-12.5559, error:0.3181'
 
 
 ans =
 
-    'iter:5, likelihood:-12.4201, error:0.32028'
+    'iter:5, likelihood:-12.5598, error:0.31733'
+```
+Next the same process will be repeated for all landmark channels. In this case, the output should look like
+```
+Segmenting image channel 2
+Enter thresh_parameter value between 0-100. Higher values for detecting few but brightest cells - 99.98
+Enter 'y' if accept thresh_parameter else enter 'n' -'n'
+Enter thresh_parameter value between 0-100. Higher values for detecting few but brightest cells - 99.97
+```
+<img src = "extra/thresh_param_3.jpg" width=50% >
+```
+Enter 'y' if accept thresh_parameter else enter 'n' -'y'
+
+ans =
+
+       36865           3
+
+
+ans =
+
+    'iter:1, likelihood:-10.4939, error:0.37325'
+
+
+ans =
+
+    'iter:2, likelihood:-10.4993, error:0.36659'
+
+
+ans =
+
+    'iter:3, likelihood:-10.5018, error:0.36522'
+
+
+ans =
+
+    'iter:4, likelihood:-10.5028, error:0.36471'
 ```
 
 
