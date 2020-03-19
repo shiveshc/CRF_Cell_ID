@@ -123,7 +123,7 @@ Segmenting main image channel ...
 Enter thresh_parameter value between 0-100. Higher values for detecting few but brightest cells - 
 ```
 
-Here the thresh parameter is input parameter for segmenting cells. We'll set it as 99.98 as the value. This will generate an output image that shows the initialized means of gaussian mixture components.
+Here the thresh parameter is an input parameter for segmenting cells which is used for initializing the means of gaussian mixture components. We'll set try 99.95 as the value. This will generate an output image that shows detected cells
 
 <img src = "extra/thresh_param_1.jpg" width=50% >
 
@@ -136,6 +136,41 @@ Enter 'y' if accept thresh_parameter else enter 'n' -
 
 We'll enter 'n' becuase we are not satisfied with the chosen thresh_parameter and re-enter thresh_parameter. After a couple of trial and errors we select 99.95 as parameter value. In this case the image should like
 
+<img src = "extra/thresh_param_1.jpg" width=50% >
+
+Since we're satisfied this parameter, we'll enter 'y' on terminal this time. Now the terminal should look like
+```
+Enter 'y' if accept thresh_parameter else enter 'n' -'y'
+
+ans =
+
+      199990           3
+
+
+ans =
+
+    'iter:1, likelihood:-12.3781, error:0.34715'
+
+
+ans =
+
+    'iter:2, likelihood:-12.3981, error:0.32724'
+
+
+ans =
+
+    'iter:3, likelihood:-12.4095, error:0.32275'
+
+
+ans =
+
+    'iter:4, likelihood:-12.416, error:0.32108'
+
+
+ans =
+
+    'iter:5, likelihood:-12.4201, error:0.32028'
+```
 
 
 
