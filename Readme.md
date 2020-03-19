@@ -208,6 +208,15 @@ ans =
     'iter:4, likelihood:-10.5028, error:0.36471'
 ```
 
+#### Skipping cell detection for channels
+Note that our cell segmentation algorithm was designed for segmenting nuclei in images thus it's performance for segmenting cells with arbitrary morphology may not be optimum. There cell detection for these channels can be skipped if manual detection for these channels are available such as marker annotation files generated file with Vaa3D. In this case we run
+
+
+Next we'll specify landmark information in channels
+
+
+
+
 
 
 
