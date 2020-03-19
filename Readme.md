@@ -179,6 +179,7 @@ Enter 'y' if accept thresh_parameter else enter 'n' -'n'
 Enter thresh_parameter value between 0-100. Higher values for detecting few but brightest cells - 99.97
 ```
 <img src = "extra/thresh_param_3.jpg" width=50% >
+
 ```
 Enter 'y' if accept thresh_parameter else enter 'n' -'y'
 
