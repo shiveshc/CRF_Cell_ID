@@ -95,7 +95,7 @@ caxis([0,0.3])
 ```
 <img src = "extra/sample_data1_img1.jpg" width=50% ><img src = "extra/sample_data1_img2.jpg" width=50% >
 
-We'll predict identities of cells in the channel on the right and will use the channel on the left as landmark channel i.e. channel in which identities of cells are known. In practice `CRF_Cell_ID` supports any number of landmarks channels as will be shown below. Further, it is not necessary to know that the identities of all cells in a landmark channel. Thus `CRF_Cell_ID` easily integrates available information from multiple channels.
+We'll predict identities of cells in the channel on the right and will use the channel on the left as landmark channel i.e. channel in which identities of cells are known. In practice `CRF_Cell_ID` supports any number of landmarks channels as will be shown below. Further, it is not necessary to know the identities of all cells in a landmark channel. Thus `CRF_Cell_ID` easily integrates available information from multiple channels.
 
 ### 2. Preprocess data for annotation
 In this step we'll 1) detect all cells in each channel read in previous step. 2) specify landmark information 3) generate a coordinate axes in head, and 4) generate a data file that will be used as input in the next step. 
@@ -112,6 +112,29 @@ Outputs :
  data file		.mat data file that will be used as input in next step
 ```
 
+For us, `img2` is the image channel in which cell identities are to be predicted thus our first argument. `img1` is second argument
+```
+preprocess_data('sample_run\sample_data1','data_annotation_sample_data1',img2,img1)
+```
+
+The output on terminal should look like
+```
+Segmenting main image channel ... 
+Enter thresh_parameter value between 0-100. Higher values for detecting few but brightest cells - 
+```
+
+Here the thresh parameter is input parameter for segmenting cells. We'll set it as 99.98 as the value. This will generate an output image that shows the initialized means of gaussian mixture components.
+
+<img src = "extra/thresh_param_1.jpg" width=50% >
+
+Clearly the parameeter value is too high as many cells are not detected. On the terminal you shoud see the message
+
+```
+Enter thresh_parameter value between 0-100. Higher values for detecting few but brightest cells - 99.98
+Enter 'y' if accept thresh_parameter else enter 'n' -
+```
+
+We'll enter 'n' becuase we are not satisfied with the chosen thresh_parameter and re-enter thresh_parameter. After a couple of trial and errors we select 99.95 as parameter value. In this case the image should like
 
 
 
