@@ -106,15 +106,19 @@ Inputs :
  out_folder		directory path where the output data file be saved
  data_name		name of the output data file
  img1			image channel in which identities of cells are to be predicted
- varargin		variable number of image channels that can be used as landmark channels
+ img1_marker		Optional Vaa3d marker file if manually detected cells in img1. If not available set as []
+ img1_marker_name	Optional .xlsx file storing the names of manually detected cells in img1. If not available set as []
+ varargin		variable number of image channels that can be used as landmark channels. Each varargin is triplet combination of 
+ 			image, marker file and marker name file e.g. {img,\img_marker,\img_marker_name.xlsx} or {img,[],[]} if manual
+			detection is not available.
 
 Outputs :
  data file		.mat data file that will be used as input in next step
 ```
 
-For us, `img2` is the image channel in which cell identities are to be predicted thus our first argument. `img1` is second argument
+For us, `img2` is the image channel in which cell identities are to be predicted thus our first argument. Further we are not going to use any manual detection 
 ```
-preprocess_data('sample_run\sample_data1','data_annotation_sample_data1',img2,img1)
+preprocess_data('sample_run\sample_data1','data_annotation_sample_data1',img2,[],[],{img1,[],[]})
 ```
 
 The output on terminal should look like
@@ -209,8 +213,11 @@ ans =
 ```
 
 #### Skipping cell detection for channels
-Note that our cell segmentation algorithm was designed for segmenting nuclei in images thus it's performance for segmenting cells with arbitrary morphology may not be optimum. There cell detection for these channels can be skipped if manual detection for these channels are available such as marker annotation files generated file with Vaa3D. In this case we run
+Note that automatic cell segmentation step can be skipped for any image channels if manual detection for these channels are available such as marker annotation files generated with Vaa3D. e.g. instead of automatic detetction for channel 1 we can use `img1_markers` and `img1_marker_names` in 'sample_data_1`
 
+```
+preprocess_data('sample_run\sample_data1','data_annotation_sample_data1',img2,[],[],{img1,'sample_run\sample_data1\img1_markers','sample_run\sample_data1\img1_marker_names.xlsx'})
+```
 
 Next we'll specify landmark information in channels
 
