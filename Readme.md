@@ -212,8 +212,8 @@ ans =
     'iter:4, likelihood:-10.5028, error:0.36471'
 ```
 
-#### Skipping cell detection for channels
-Note that automatic cell segmentation step can be skipped for any image channels if manual detection for these channels are available such as marker annotation files generated with Vaa3D. e.g. instead of automatic detetction for channel 1 we can use `img1_markers` and `img1_marker_names` in 'sample_data_1`
+### Skipping cell detection in specific channels (optional)
+Note that automatic cell segmentation step can be skipped for any image channel automatic segmentation does not generate good results and manual detection for the channel is available such as marker annotation files generated with Vaa3D. e.g. instead of automatic detetction for `img1` we can use `img1_markers` and `img1_marker_names.xlsx` in `sample_data_1`. In this case we run
 
 ```
 preprocess_data('sample_run\sample_data1','data_annotation_sample_data1',img2,[],[],{img1,'sample_run\sample_data1\img1_markers','sample_run\sample_data1\img1_marker_names.xlsx'})
