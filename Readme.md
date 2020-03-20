@@ -217,7 +217,7 @@ ans =
     'iter:4, likelihood:-10.5028, error:0.36471'
 ```
 
-### Skipping cell detection in specific channels (optional)
+_Skipping cell detection in specific channels (optional)_
 Note that automatic cell segmentation step can be skipped for any image channel automatic segmentation does not generate good results and manual detection for the channel is available such as marker annotation files generated with Vaa3D. e.g. instead of automatic detetction for `image1` we can use `img1_markers` and `img1_marker_names.xlsx` in `sample_data_1`. In this case we run
 
 ```
@@ -229,20 +229,21 @@ preprocess_data('sample_run\sample_data1',...
 	{image1,'sample_run\sample_data1\img1_markers','sample_run\sample_data1\img1_marker_names.xlsx'})
 ```
 
-Next we'll specify landmark information in channels. The prompt at terminal will ask for which image channel should be used for specifying landmarks
+Next we'll specify landmark information in channels by going through each landmark channel one-by-one, specifying landmark cell in each channel (via user input) and entering the selected cell's name. The prompt at terminal will ask for which image channels should be used for specifying landmarks
 
 ```
 Enter which channels to use for specifying landmarks e.g [2,4] else enter blank (single quotes) -
 ```
 
-We'll use both channels to specify landmark thus enter [1,2]. Note, here 1 always denotes the `img1` argument and channel 2 onwards denote images provided in `varargin`
+We'll use `image1` channel to specify identities of easily identified cells in whole-brain stack as well as the landmark channel, thus, enter [1,2]. Note, here 1 always denotes the `img1` argument and channel 2 onwards denote images provided in `varargin`
 
 ```
 Enter which channels to use for specifying landmarks e.g [2,4] else enter blank (single quotes) -[1,2]
 ```
 
-In this case we'll first see `image2` first for specifying landmarks and following prompt on terminal
-<img src = "extra/landmark_1.jpg", width=50% > 
+In this case we'll first see `image2` for specifying landmarks. With the cursors on the image, users can click on any cell whose identity they eant to fix. We also get the following prompt on terminal
+
+<img src = "extra/landmark_1.jpg" width=50% > 
 
 ```
 Enter which channels to use for specifying landmarks e.g [2,4] else enter blank (single quotes) -[1,2]
@@ -254,7 +255,7 @@ ans =
 Enter name of the selected landmark e.g. 'RMEL' -
 ```
 
-Using this interface users can easily specify landmark names e.g the one highlighted in image is RMEV
+After clicking on the cell on the image e.g. the one highlighted in image we'' enter its name on the terminal 'RMEV'.
 
 ```
 Enter name of the selected landmark e.g. 'RMEL' -'RMEV'
@@ -264,9 +265,9 @@ Next we get the follwoing prompt
 ```
 If done with this channel, enter 'y' -
 ```
-We'll enter 'n' since we want to specify more landmark names. When done we'll specify 'y'
+We'll enter 'n' since we want to specify more landmark names. When done we'll specify 'y'. Thus, following the promts on terminal, users can easily specify identity of as many landmarks as they want.
 
-The same process will be repeated for other landmark channels
+The same process will be repeated for other landmark channels as well.
 
 
 
