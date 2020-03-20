@@ -6,7 +6,7 @@
 %%% Performs - 1. segmentation of all channels
 %%%            2. specify landmark information
 %%%            3. generate coordinate axes in brain
-%%%            4. generate a data file for annotation step
+%%%            4. gener data for annotation step
 
 function preprocess_data(out_folder,data_name,img_1,img_1_marker,img_1_marker_name,varargin)
     if ~exist('img_1')
