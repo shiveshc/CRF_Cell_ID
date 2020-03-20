@@ -242,8 +242,7 @@ Enter which channels to use for specifying landmarks e.g [2,4] else enter blank 
 ```
 
 In this case we'll first see `image2` first for specifying landmarks and following prompt on terminal
-
-<img src = "extra/landmark_1.jpg", width = 50% > 
+<img src = "extra/landmark_1.jpg", width=50% > 
 
 ```
 Enter which channels to use for specifying landmarks e.g [2,4] else enter blank (single quotes) -[1,2]
