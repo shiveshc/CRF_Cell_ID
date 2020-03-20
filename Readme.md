@@ -83,14 +83,14 @@ Outputs:
 e.g. we'll read `sample_data1` in `sample_run` folder. Two different channels are present in `sample_data1` as `img1` and `img2`. Each folder contains z-planes saved separately.
 
 ```
-img1 = read_tif('separate','sample_run\sample_data1\img1');
-img2 = read_tif('separate','sample_run\sample_data1\img2');
+image1 = read_tif('separate','sample_run\sample_data1\img1');
+image2 = read_tif('separate','sample_run\sample_data1\img2');
 ```
 visualizing the max-projection of the two channels, output should look like below
 ```
-figure,imshow(max(mat2gray(img1),[],3),'border','tight')
+figure,imshow(max(mat2gray(image1),[],3),'border','tight')
 caxis([0,0.3])
-figure,imshow(max(mat2gray(img2),[],3),'border','tight')
+figure,imshow(max(mat2gray(image2),[],3),'border','tight')
 caxis([0,0.3])
 ```
 <img src = "extra/sample_data1_img1.jpg" width=50% ><img src = "extra/sample_data1_img2.jpg" width=50% >
@@ -116,9 +116,14 @@ Outputs :
  data file		.mat data file that will be used as input in next step
 ```
 
-For us, `img2` is the image channel in which cell identities are to be predicted thus our first argument. Further we are not going to use any manual detection 
+For us, `image2` is the image channel in which cell identities are to be predicted thus our first argument. Further we are not going to use any manual detection 
 ```
-preprocess_data('sample_run\sample_data1','data_annotation_sample_data1',img2,[],[],{img1,[],[]})
+preprocess_data('sample_run\sample_data1',...
+	'data_annotation_sample_data1',...
+	image2,...
+	[],...
+	[],...
+	{image1,[],[]})
 ```
 
 The output on terminal should look like
@@ -213,16 +218,30 @@ ans =
 ```
 
 ### Skipping cell detection in specific channels (optional)
-Note that automatic cell segmentation step can be skipped for any image channel automatic segmentation does not generate good results and manual detection for the channel is available such as marker annotation files generated with Vaa3D. e.g. instead of automatic detetction for `img1` we can use `img1_markers` and `img1_marker_names.xlsx` in `sample_data_1`. In this case we run
+Note that automatic cell segmentation step can be skipped for any image channel automatic segmentation does not generate good results and manual detection for the channel is available such as marker annotation files generated with Vaa3D. e.g. instead of automatic detetction for `image1` we can use `img1_markers` and `img1_marker_names.xlsx` in `sample_data_1`. In this case we run
 
 ```
-preprocess_data('sample_run\sample_data1','data_annotation_sample_data1',img2,[],[],{img1,'sample_run\sample_data1\img1_markers','sample_run\sample_data1\img1_marker_names.xlsx'})
+preprocess_data('sample_run\sample_data1',...
+	'data_annotation_sample_data1',...
+	image2,...
+	[],...
+	[],...
+	{image1,'sample_run\sample_data1\img1_markers','sample_run\sample_data1\img1_marker_names.xlsx'})
 ```
 
-Next we'll specify landmark information in channels
+Next we'll specify landmark information in channels. The prompt at terminal will ask for which image channel should be used for specifying landmarks
 
+```
+Enter which channels to use for specifying landmarks e.g [2,4] else enter blank (single quotes) -
+```
 
+We'll use both channels to specify landmark thus enter [1,2]. Note, here 1 always denotes the `img1` argument and channel 2 onwards denote images provided in `varargin`
 
+```
+Enter which channels to use for specifying landmarks e.g [2,4] else enter blank (single quotes) -[1,2]
+```
+
+In this case we'll first see `image2`
 
 
 
