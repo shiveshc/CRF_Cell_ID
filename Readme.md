@@ -241,8 +241,33 @@ We'll use both channels to specify landmark thus enter [1,2]. Note, here 1 alway
 Enter which channels to use for specifying landmarks e.g [2,4] else enter blank (single quotes) -[1,2]
 ```
 
-In this case we'll first see `image2`
+In this case we'll first see `image2` first for specifying landmarks and following prompt on terminal
 
+<img src = "extra/landmark_1.jpg", width = 50% > 
+
+```
+Enter which channels to use for specifying landmarks e.g [2,4] else enter blank (single quotes) -[1,2]
+
+ans = 
+
+    "Click on a landmark cell, then enter its name on terminal e.g. 'RMEL'"
+
+Enter name of the selected landmark e.g. 'RMEL' -
+```
+
+Using this interface users can easily specify landmark names e.g the one highlighted in image is RMEV
+
+```
+Enter name of the selected landmark e.g. 'RMEL' -'RMEV'
+```
+
+Next we get the follwoing prompt
+```
+If done with this channel, enter 'y' -
+```
+We'll enter 'n' since we want to specify more landmark names. When done we'll specify 'y'
+
+The same process will be repeated for other landmark channels
 
 
 
