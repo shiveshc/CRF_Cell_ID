@@ -134,7 +134,7 @@ Enter thresh_parameter value between 0-100. Higher values for detecting few but 
 
 Here the `thresh_parameter` is an input parameter for segmenting cells which is used to initialize the means of gaussian mixture components. We'll start with trying 99.95 as the value. This will generate an output image that shows detected cells
 
-<img src = "extra/thresh_param_1.jpg" width=50% >
+<img src = "extra/thresh_param_1.jpg" width=70% >
 
 Clearly the parameeter value is too high as many cells are not detected. On the terminal you shoud see the message
 
@@ -145,7 +145,7 @@ Enter 'y' if accept thresh_parameter else enter 'n' -
 
 We'll enter 'n' becuase we are not satisfied with the chosen `thresh_parameter` and lower the value to detect more cells. After a couple of trial and errors we select 99.83 as the parameter value. In this case the image should like
 
-<img src = "extra/thresh_param_2.jpg" width=50% >
+<img src = "extra/thresh_param_2.jpg" width=70% >
 
 Since we're satisfied with this parameter, we'll enter 'y' on terminal this time. Now the terminal should look like
 ```
@@ -187,7 +187,7 @@ Enter thresh_parameter value between 0-100. Higher values for detecting few but 
 Enter 'y' if accept thresh_parameter else enter 'n' -'n'
 Enter thresh_parameter value between 0-100. Higher values for detecting few but brightest cells - 99.97
 ```
-<img src = "extra/thresh_param_3.jpg" width=50% >
+<img src = "extra/thresh_param_3.jpg" width=70% >
 
 ```
 Enter 'y' if accept thresh_parameter else enter 'n' -'y'
@@ -218,6 +218,7 @@ ans =
 ```
 
 _Skipping cell detection in specific channels (optional)_
+
 Note that automatic cell segmentation step can be skipped for any image channel automatic segmentation does not generate good results and manual detection for the channel is available such as marker annotation files generated with Vaa3D. e.g. instead of automatic detetction for `image1` we can use `img1_markers` and `img1_marker_names.xlsx` in `sample_data_1`. In this case we run
 
 ```
@@ -228,6 +229,7 @@ preprocess_data('sample_run\sample_data1',...
 	[],...
 	{image1,'sample_run\sample_data1\img1_markers','sample_run\sample_data1\img1_marker_names.xlsx'})
 ```
+
 
 Next we'll specify landmark information in channels by going through each landmark channel one-by-one, specifying landmark cell in each channel (via user input) and entering the selected cell's name. The prompt at terminal will ask for which image channels should be used for specifying landmarks
 
@@ -243,7 +245,7 @@ Enter which channels to use for specifying landmarks e.g [2,4] else enter blank 
 
 In this case we'll first see `image2` for specifying landmarks. With the cursors on the image, users can click on any cell whose identity they eant to fix. We also get the following prompt on terminal
 
-<img src = "extra/landmark_1.jpg" width=50% > 
+<img src = "extra/landmark_1.jpg" width=70% > 
 
 ```
 Enter which channels to use for specifying landmarks e.g [2,4] else enter blank (single quotes) -[1,2]
