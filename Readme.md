@@ -116,7 +116,7 @@ Outputs :
  data file		.mat data file that will be used as input in next step
 ```
 
-For us, `image2` is the image channel in which cell identities are to be predicted thus our first argument. Further we are not going to use any manual detection 
+For us, `image2` is the image channel in which cell identities are to be predicted thus our first argument. Further we are not going to use any manual detection, there we run
 ```
 preprocess_data('sample_run\sample_data1',...
 	'data_annotation_sample_data1',...
@@ -125,29 +125,29 @@ preprocess_data('sample_run\sample_data1',...
 	[],...
 	{image1,[],[]})
 ```
-
+#### 1. Detecting cells in image channels
 The output on terminal should look like
 ```
 Segmenting main image channel ... 
 Enter thresh_parameter value between 0-100. Higher values for detecting few but brightest cells - 
 ```
 
-Here the `thresh_parameter` is an input parameter for segmenting cells which is used to initialize the means of gaussian mixture components. We'll start with trying 99.95 as the value. This will generate an output image that shows detected cells
+Here the `thresh_parameter` is an input parameter for segmenting cells which is used to initialize the means of gaussian mixture components. We'll start with trying 99.95 as the value. This will generate an output image showing detected cells
 
 <img src = "extra/thresh_param_1.jpg" width=70% >
 
-Clearly the parameeter value is too high as many cells are not detected. On the terminal you shoud see the message
+Clearly the parameeter value is too high as many cells are not detected thus we'd like to specify the parameter value again. On the terminal you shoud see the message asking to accept/reject the current parameter value
 
 ```
 Enter thresh_parameter value between 0-100. Higher values for detecting few but brightest cells - 99.95
 Enter 'y' if accept thresh_parameter else enter 'n' -
 ```
 
-We'll enter 'n' becuase we are not satisfied with the chosen `thresh_parameter` and lower the value to detect more cells. After a couple of trial and errors we select 99.83 as the parameter value. In this case the image should like
+We'll enter 'n' becuase we are not satisfied with the chosen `thresh_parameter` and lower the value to detect more cells. After a couple of trial and errors we select 99.83 as the parameter value. In this case, the image should look like
 
 <img src = "extra/thresh_param_2.jpg" width=70% >
 
-Since we're satisfied with this parameter, we'll enter 'y' on terminal this time. Now the terminal should look like
+Since we're satisfied with this parameter, we'll enter 'y' on terminal this time. Now the GM model will be fitted to image data to segment cells. The terminal should look like
 ```
 Enter 'y' if accept thresh_parameter else enter 'n' -'y'
 
@@ -219,7 +219,7 @@ ans =
 
 _Skipping cell detection in specific channels (optional)_
 
-Note that automatic cell segmentation step can be skipped for any image channel automatic segmentation does not generate good results and manual detection for the channel is available such as marker annotation files generated with Vaa3D. e.g. instead of automatic detetction for `image1` we can use `img1_markers` and `img1_marker_names.xlsx` in `sample_data_1`. In this case we run
+Note that automatic cell segmentation step can be skipped for any image channel if automatic segmentation does not generate good results and manual detections for the channel are available such as marker annotation files generated with Vaa3D. e.g. instead of automatic detetction for `image1` we can use `img1_markers` and `img1_marker_names.xlsx` in `sample_data_1`. In this case, we run `precprocess_data` as follows
 
 ```
 preprocess_data('sample_run\sample_data1',...
@@ -229,35 +229,30 @@ preprocess_data('sample_run\sample_data1',...
 	[],...
 	{image1,'sample_run\sample_data1\img1_markers','sample_run\sample_data1\img1_marker_names.xlsx'})
 ```
+In the above, automatic segmentation will be performed only for `image2` and not for `image1`.
 
-
+#### 2. Specifying landmarks in image channels
 Next we'll specify landmark information in channels by going through each landmark channel one-by-one, specifying landmark cell in each channel (via user input) and entering the selected cell's name. The prompt at terminal will ask for which image channels should be used for specifying landmarks
 
 ```
 Enter which channels to use for specifying landmarks e.g [2,4] else enter blank (single quotes) -
 ```
 
-We'll use `image1` channel to specify identities of easily identified cells in whole-brain stack as well as the landmark channel, thus, enter [1,2]. Note, here 1 always denotes the `img1` argument and channel 2 onwards denote images provided in `varargin`
+We'll use `image1` channel to specify identities of easily identified cells in whole-brain stack as well as the landmark channel i.e `image2`, thus, enter [1,2]. Note, here 1 always denotes the `img1` argument and channel 2 onwards denote images provided in `varargin`. If you do not want to specify landmarks in any channel, enter `[]`
 
 ```
 Enter which channels to use for specifying landmarks e.g [2,4] else enter blank (single quotes) -[1,2]
 ```
 
-In this case we'll first see `image2` for specifying landmarks. With the cursors on the image, users can click on any cell whose identity they eant to fix. We also get the following prompt on terminal
+In this case we'll first see `image2` for specifying landmarks. With the cursors on the image, users can click on any cell whose identity they want to specify. We also get the following prompt on terminal
 
 <img src = "extra/landmark_1.jpg" width=70% > 
 
 ```
-Enter which channels to use for specifying landmarks e.g [2,4] else enter blank (single quotes) -[1,2]
-
-ans = 
-
-    "Click on a landmark cell, then enter its name on terminal e.g. 'RMEL'"
-
 Enter name of the selected landmark e.g. 'RMEL' -
 ```
 
-After clicking on the cell on the image e.g. the one highlighted in image we'' enter its name on the terminal 'RMEV'.
+After clicking on the cell on the image e.g. the one highlighted in image above we enter its name on the terminal 'RMEV'.
 
 ```
 Enter name of the selected landmark e.g. 'RMEL' -'RMEV'
@@ -267,9 +262,35 @@ Next we get the follwoing prompt
 ```
 If done with this channel, enter 'y' -
 ```
-We'll enter 'n' since we want to specify more landmark names. When done we'll specify 'y'. Thus, following the promts on terminal, users can easily specify identity of as many landmarks as they want.
+We'll enter 'n' since we want to specify more landmark names. When done, we'll specify 'y'. Thus, following the promts on terminal, users can easily specify identities of as many landmarks as they want e.g.
 
-The same process will be repeated for other landmark channels as well.
+<img src = "extra/landmark_2.jpg" width=70% >
+
+```
+Enter name of the selected landmark e.g. 'RMEL' -'RMED'
+If done with this channel, enter 'y' -'y'
+```
+
+Next the same process will be performed one-by-one for all channels specified above, `[1,2]` in our case. Thus we specify landmarks in `image1` next.
+
+<img src = "extra/landmark_3.jpg" width=70% >
+
+```
+Enter name of the selected landmark e.g. 'RMEL' -'ASGL'
+If done with this channel, enter 'y' -'n'
+
+```
+
+<img src = "extra/landmark_4.jpg" width=70% >
+
+```
+Enter name of the selected landmark e.g. 'RMEL' -'AIBL'
+If done with this channel, enter 'y' -'y'
+```
+
+#### 3. Define axes specifying cells
+Next we'll specify axes specifying cells via user input. These cells enable defining a consistent coordinate system in head which is critical for accuractely extrating features from image
+
 
 
 
