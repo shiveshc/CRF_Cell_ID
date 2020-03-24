@@ -335,6 +335,21 @@ ans =
 
 <img src = "extra/V_neuron.jpg" width=70% >
 
+After selecting all axes specifying cells we get the following prompt on the terminal.
+```
+Enter PCA coefficients for specifying AP, LR and DV axes e.g [1,2,3] or [1,3,2] -
+```
+`CRF_Cell_ID` automatically generates AP, LR, and DV axes by PCA on cell postions. However we need to specify the correspondence between PCA eigenvectors and axes e.g [1,2,3] means PCA eignevectors 1, 2, and 3 correspond to AP, LR and DV axes respectively. Most of the time, eigenvectors corresponding to LR and DV axes flip thus either [1,2,3] or [1,3,2] input values work most of the times. We enter [1,3,2]
+
+```
+Enter PCA coefficients for specifying AP, LR and DV axes e.g [1,2,3] or [1,3,2] -[1,3,2]
+```
+This should generate an image showing cells detected in image and PA, LR and DV axes. 
+
+<img src = "extra/axes.jpg" width=70% >
+
+
+
 
 
 
