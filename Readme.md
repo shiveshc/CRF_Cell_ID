@@ -13,13 +13,19 @@ This repository contains -
 
 <img src = "extra/video1_gif.gif" width=100% align="center">
 
-## Contents
-1. [Installation](#step-by-step-walkthrough)
-2. [Description of repository contents](#installation)
+# Contents
+1. [Installation](#installation)
+2. [Description of repository contents](#description-of-respository-contents)
 3. [Step-by-Step Walkthrough](#step-by-step-walkthrough)
    - [Read image data](#1-read-image-data)
    - [Preprocess data for annotation](#2-preprocess-data-for-annotation)
      - [Detecting cells in image channels](#1-detecting-cells-in-image-channels)
+     - [Specifying landmarks](#2-specifying-landmarks-in-image-channels)
+     - [Selecting axes speciying cells](#3-define-axes-specifying-cells)
+     - Output files
+   - Predict identities
+   - Visualize prediction results
+4. Building data-driven atlas from annotated data
 
 
 
@@ -227,7 +233,7 @@ ans =
     'iter:4, likelihood:-10.5028, error:0.36471'
 ```
 
-_Skipping cell detection in specific channels (optional)_
+**_Skipping cell detection in specific channels (optional)_**
 
 Note that automatic cell segmentation step can be skipped for any image channel if automatic segmentation does not generate good results and manual detections for the channel are available such as marker annotation files generated with Vaa3D. e.g. instead of automatic detetction for `image1` we can use `img1_markers` and `img1_marker_names.xlsx` in `sample_data_1`. In this case, we run `precprocess_data` as follows
 
@@ -298,7 +304,7 @@ Enter name of the selected landmark e.g. 'RMEL' -'AIBR'
 If done with this channel, enter 'y' -'y'
 ```
 
-#### 3. Define axes specifying cells
+#### 3. Select axes specifying cells
 Next, we'll select axes specifying cells via user input. These cells enable defining a consistent coordinate system in head which is crucical for accurately extracting features from image. To do so, the terminal prompt asks to sequentially click on cells in the image.
 
 First, we will click on two cells in the image, one in the anterior and one in the posterior region of the head. These cells will be used to define the anterior-posterior (AP) axis. Here, users can click on any cell; the specific identity of selected cell doesn't matter as these cells are used only to check the consistency of axis direction. First, we click on a cell that in the anterior of the head ganglion in the image
