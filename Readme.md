@@ -344,9 +344,10 @@ Enter PCA coefficients for specifying AP, LR and DV axes e.g [1,2,3] or [1,3,2] 
 ```
 Enter PCA coefficients for specifying AP, LR and DV axes e.g [1,2,3] or [1,3,2] -[1,3,2]
 ```
-This should generate an image showing cells detected in image and PA, LR and DV axes. 
+This should generate an image showing cells detected in image (red dots) and automatically generated PA (blue), LR (green) and DV (black) axes. Sample views are shown below
 
-<img src = "extra/axes.jpg" width=70% >
+<img src = "extra/axes1.jpg" width=50% ><img src = "extra/axes2.jpg" width=50% >
+<img src = "extra/axes3.jpg" width=50% ><img src = "extra/axes4.jpg" width=50% >
 
 
 
