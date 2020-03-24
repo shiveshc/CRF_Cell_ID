@@ -11,7 +11,7 @@ function axes_neurons_to_neuron_map = define_axes_specifying_neurons(thisimage_r
     for i = 1:6
 %         img = cat(2,max(mat2gray(thisimage_r),[],3),max(mat2gray(thisimage_marker),[],3));
         img = max(mat2gray(thisimage_r),[],3);
-        figure,imshow(img,[])
+        figure,imshow(img,[],'border','tight')
         caxis([0,0.4])
         title(['Click on ',input_string{1,i},'. If not required then right click.'])
         ['select ',input_string{1,i},'. If not present than right click.']

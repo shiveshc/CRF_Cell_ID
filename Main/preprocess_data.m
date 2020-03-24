@@ -151,7 +151,7 @@ function preprocess_data(out_folder,data_name,img_1,img_1_marker,img_1_marker_na
         name = strcat([out_folder,'\segmented_img_r.tif']);
         indexed_img_to_tiff(labeled_img(:,:,:,i),cmap,name)
     end
-    mu_r = mu;
+    mu_r = [mu(:,2),mu(:,1),mu(:,3)];
     labeled_img_r = labeled_img;
     end
 
@@ -279,14 +279,14 @@ function preprocess_data(out_folder,data_name,img_1,img_1_marker,img_1_marker_na
             indexed_img_to_tiff(labeled_img(:,:,:,i),cmap,name)
         end
         
-        mu_other_channels{1,chan} = mu;
+        mu_other_channels{1,chan} = [mu(:,2),mu(:,1),mu(:,3)];
         labeled_img_other_channels{1,chan} = labeled_img;
         end
     end
     disp('Segmentation finished')
 
     %%%%%%% manually label landmark neurons by taking user input %%%%%%%
-    mu_to_map = [mu_r(:,2),mu_r(:,1)];
+    mu_to_map = mu_r;
     landmark_channels = input("Enter which channels to use for specifying landmarks e.g [2,4] else enter blank (single quotes) -");
     if isempty(landmark_channels)
         mu_c = [];
@@ -306,9 +306,8 @@ function preprocess_data(out_folder,data_name,img_1,img_1_marker,img_1_marker_na
                     imshow(max(mat2gray(img_1),[],3),'border','tight')
                     caxis([0,0.3])
                     hold on
-                    scatter(curr_mu(:,2),curr_mu(:,1),'.r')
+                    scatter(curr_mu(:,1),curr_mu(:,2),'.r')
                     title(["Click on a landmark cell, then enter its name on terminal e.g. 'RMEL'"])
-                    ["Click on a landmark cell, then enter its name on terminal e.g. 'RMEL'"]
                     [x,y,button] = ginput(1);
                     close all
                     mu_curr_channel = [mu_curr_channel;x,y]; %%% check the coordinate system
@@ -328,9 +327,8 @@ function preprocess_data(out_folder,data_name,img_1,img_1_marker,img_1_marker_na
                     imshow(max(mat2gray(curr_chan{1,1}),[],3),'border','tight')
                     caxis([0,0.3])
                     hold on
-                    scatter(curr_mu(:,2),curr_mu(:,1),'.r')
+                    scatter(curr_mu(:,1),curr_mu(:,2),'.r')
                     title(["Click on a landmark cell, then enter its name on terminal e.g. 'RMEL'"])
-                    ["Click on a landmark cell, then enter its name on terminal e.g.'RMEL'"]
                     [x,y,button] = ginput(1);
                     close all
                     mu_curr_channel = [mu_curr_channel;x,y]; %%% check the coordinate system
@@ -346,10 +344,43 @@ function preprocess_data(out_folder,data_name,img_1,img_1_marker,img_1_marker_na
         end
     end
     
+    %%%%% include landmark information from marker files if available
+    if and(~isempty(img_1_marker),~isempty(img_1_marker_name))
+        [X,Y,Z,marker_name,marker_index] = read_marker_files(img_1_marker,img_1_marker_name);
+        mu_marker = [X,Y,Z];
+        dist_mat = repmat(diag(mu_marker*mu_marker'),1,size(mu_r,1)) + repmat(diag(mu_r*mu_r')',size(mu_marker,1),1) - 2*mu_marker*mu_r';
+        [sort_dist,sort_index] = sort(dist_mat,2);
+        ind_change = find(sort_dist(:,1) > 64);
+        mu_r = [mu_r;mu_marker(ind_change,:)];
+        dist_mat = repmat(diag(mu_marker*mu_marker'),1,size(mu_r,1)) + repmat(diag(mu_r*mu_r')',size(mu_marker,1),1) - 2*mu_marker*mu_r';
+        [sort_dist,sort_index] = sort(dist_mat,2);
+        
+        mu_c = [mu_c;mu_marker];
+        landmark_names_orig = cat(1,landmark_names_orig,marker_name);
+        landmark_to_neuron_map_orig = [landmark_to_neuron_map_orig;sort_index(:,1)];
+    end
+    for chan = 1:num_imgs
+        curr_chan = varargin{1,chan};
+        if and(~isempty(curr_chan{1,2}),~isempty(curr_chan{1,3}))
+            [X,Y,Z,marker_name,marker_index] = read_marker_files(curr_chan{1,2},curr_chan{1,3});
+            mu_marker = [X,Y,Z];
+            dist_mat = repmat(diag(mu_marker*mu_marker'),1,size(mu_r,1)) + repmat(diag(mu_r*mu_r')',size(mu_marker,1),1) - 2*mu_marker*mu_r';
+            [sort_dist,sort_index] = sort(dist_mat,2);
+            ind_change = find(sort_dist(:,1) > 64);
+            mu_r = [mu_r;mu_marker(ind_change,:)];
+            dist_mat = repmat(diag(mu_marker*mu_marker'),1,size(mu_r,1)) + repmat(diag(mu_r*mu_r')',size(mu_marker,1),1) - 2*mu_marker*mu_r';
+            [sort_dist,sort_index] = sort(dist_mat,2);
+
+            mu_c = [mu_c;mu_marker];
+            landmark_names_orig = cat(1,landmark_names_orig,marker_name);
+            landmark_to_neuron_map_orig = [landmark_to_neuron_map_orig;sort_index(:,1)];
+        end
+    end
+    
 %     visualize_landmark_to_neuron_map(thisimage_r,thisimage_c,mu_r,mu_c,landmark_to_neuron_map_orig,landmark_names_orig)
 
     %%%%%% define axes specifying neurons
-    axes_neurons_to_neuron_map = define_axes_specifying_neurons(img_1,[mu_r(:,2),mu_r(:,1),mu_r(:,3)]);
+    axes_neurons_to_neuron_map = define_axes_specifying_neurons(img_1,mu_r);
     
     %%%%%%%%%%%%%% define axes param based on PCA
     mu_r_centered = mu_r - repmat(mean(mu_r),size(mu_r,1),1);
