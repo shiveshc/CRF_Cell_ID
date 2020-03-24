@@ -262,7 +262,7 @@ Next we get the follwoing prompt
 ```
 If done with this channel, enter 'y' -
 ```
-We'll enter 'n' since we want to select more landmark cells. When done, we'll enter 'y'. Thus, following the promts on terminal, users can easily specify identities of as many landmarks as they want e.g.
+We'll enter 'n' since we want to select more landmark cells. When done, we'll enter 'y'. Thus, following the prompts on the terminal, users can easily specify identities of as many landmarks as they want e.g.
 
 <img src = "extra/landmark_2.jpg" width=70% >
 
@@ -271,7 +271,7 @@ Enter name of the selected landmark e.g. 'RMEL' -'RMED'
 If done with this channel, enter 'y' -'y'
 ```
 
-Next, the same process will be performed one-by-one for landmark channels specified above, `[1,2]` in our case. Thus we specify landmarks in `image1` next.
+Next, the same process will be performed one-by-one for each landmark channel specified above, `[1,2]` in our case. Thus we specify landmarks in `image1` next.
 
 <img src = "extra/landmark_3.jpg" width=70% >
 
