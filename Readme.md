@@ -232,7 +232,7 @@ preprocess_data('sample_run\sample_data1',...
 In the above, automatic segmentation will be performed only for `image2` and not for `image1`.
 
 #### 2. Specifying landmarks in image channels
-Next we'll specify landmark information in channels by going through each landmark channel one-by-one, specifying landmark cell in each channel (via user input) and entering the selected cell's name. The prompt at terminal will ask for which image channels should be used for specifying landmarks
+Next, we'll specify landmark information in channels by going through each landmark channel one-by-one, selecting landmark cell in each channel (via user input) and entering the selected cell's name in terminal. A terminal prompt will ask for which image channels to use for specifying landmarks
 
 ```
 Enter which channels to use for specifying landmarks e.g [2,4] else enter blank (single quotes) -
@@ -244,7 +244,7 @@ We'll use `image1` channel to specify identities of easily identified cells in w
 Enter which channels to use for specifying landmarks e.g [2,4] else enter blank (single quotes) -[1,2]
 ```
 
-In this case we'll first see `image2` for specifying landmarks. With the cursors on the image, users can click on any cell whose identity they want to specify. We also get the following prompt on terminal
+In this case we'll first see `image2` for selecting landmarks. With the cursors on the image, users can click on any cell whose identity they want to specify. We also get the following prompt on the terminal
 
 <img src = "extra/landmark_1.jpg" width=70% > 
 
@@ -252,7 +252,7 @@ In this case we'll first see `image2` for specifying landmarks. With the cursors
 Enter name of the selected landmark e.g. 'RMEL' -
 ```
 
-After clicking on the cell on the image e.g. the one highlighted in image above we enter its name on the terminal 'RMEV'.
+After clicking on desired cell in the image e.g. the one highlighted in image above, we enter its name on the terminal 'RMEV'.
 
 ```
 Enter name of the selected landmark e.g. 'RMEL' -'RMEV'
@@ -262,7 +262,7 @@ Next we get the follwoing prompt
 ```
 If done with this channel, enter 'y' -
 ```
-We'll enter 'n' since we want to specify more landmark names. When done, we'll specify 'y'. Thus, following the promts on terminal, users can easily specify identities of as many landmarks as they want e.g.
+We'll enter 'n' since we want to select more landmark cells. When done, we'll enter 'y'. Thus, following the promts on terminal, users can easily specify identities of as many landmarks as they want e.g.
 
 <img src = "extra/landmark_2.jpg" width=70% >
 
@@ -271,7 +271,7 @@ Enter name of the selected landmark e.g. 'RMEL' -'RMED'
 If done with this channel, enter 'y' -'y'
 ```
 
-Next the same process will be performed one-by-one for all channels specified above, `[1,2]` in our case. Thus we specify landmarks in `image1` next.
+Next, the same process will be performed one-by-one for landmark channels specified above, `[1,2]` in our case. Thus we specify landmarks in `image1` next.
 
 <img src = "extra/landmark_3.jpg" width=70% >
 
@@ -284,14 +284,14 @@ If done with this channel, enter 'y' -'n'
 <img src = "extra/landmark_4.jpg" width=70% >
 
 ```
-Enter name of the selected landmark e.g. 'RMEL' -'AIBL'
+Enter name of the selected landmark e.g. 'RMEL' -'AIBR'
 If done with this channel, enter 'y' -'y'
 ```
 
 #### 3. Define axes specifying cells
-Next we'll specify axes specifying cells via user input. These cells enable defining a consistent coordinate system in head which is crucical for accurately extracting features from image. To do so, the terminal prompt asks to sequentially click on cells in the image.
+Next, we'll select axes specifying cells via user input. These cells enable defining a consistent coordinate system in head which is crucical for accurately extracting features from image. To do so, the terminal prompt asks to sequentially click on cells in the image.
 
-First we will click on two cells in the image, one in the anterior and one in the posterior region of head. These cells will be used to define anterior-posterior (AP) axis. Here, users can click on any cell; the specific identity of selected cell doesn't matter as these cells are used only to check the consistency of direction of axis. First, we click on a cell in anterior of head ganglion.
+First, we will click on two cells in the image, one in the anterior and one in the posterior region of head. These cells will be used to define anterior-posterior (AP) axis. Here, users can click on any cell; the specific identity of selected cell doesn't matter as these cells are used only to check the consistency of axis direction. First, we click on a cell in anterior of head ganglion.
 ```
 ans =
 
@@ -307,7 +307,7 @@ ans =
 ```
 <img src = "extra/P_neuron.jpg" width=70% >
 
-Next, we will click on two cells that will help in defining left-right (LR) axis. Since distinguishing between cells in the left and right region of head in current view of the image is difficult, we'll skip selecting these by right-clicking anywhere in the image
+Next, we will click on two cells that will help in defining left-right (LR) axis. Since distinguishing between cells in the left and right region of head in current view of the image is difficult, we'll skip selecting cells by right-clicking anywhere in the image
 ```
 ans =
 
