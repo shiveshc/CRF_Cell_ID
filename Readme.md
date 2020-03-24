@@ -8,10 +8,20 @@ To learn about details of the method, please read the <a href="https://www.biorx
 
 This repository contains - 
 1. Code for predicting identities in new datasets
-2. Code for building new atlas based on ground-truth annotated datasets
+2. Code for building new atlases based on ground-truth annotated datasets
 3. Raw datasets used in the paper, ground-truth annotations, and codes for reproducing results
 
 <img src = "extra/video1_gif.gif" width=100% align="center">
+
+## Contents
+1. [Installation](#step-by-step-walkthrough)
+2. [Description of repository contents](#installation)
+3. [Step-by-Step Walkthrough](#step-by-step-walkthrough)
+   - [Read image data](#1-read-image-data)
+   - [Preprocess data for annotation](#2-preprocess-data-for-annotation)
+     - [Detecting cells in image channels](#1-detecting-cells-in-image-channels)
+
+
 
 # Installation
 Please make sure to keep the name of the directory as `CRF_Cell_ID` so that walkthrough instructions can be run without changing any paths.
