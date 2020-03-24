@@ -289,7 +289,49 @@ If done with this channel, enter 'y' -'y'
 ```
 
 #### 3. Define axes specifying cells
-Next we'll specify axes specifying cells via user input. These cells enable defining a consistent coordinate system in head which is critical for accuractely extrating features from image
+Next we'll specify axes specifying cells via user input. These cells enable defining a consistent coordinate system in head which is crucical for accurately extracting features from image. To do so, the terminal prompt asks to sequentially click on cells in the image.
+
+First we will click on two cells in the image, one in the anterior and one in the posterior region of head. These cells will be used to define anterior-posterior (AP) axis. Here, users can click on any cell; the specific identity of selected cell doesn't matter as these cells are used only to check the consistency of direction of axis. First, we click on a cell in anterior of head ganglion.
+```
+ans =
+
+    'select (A)-P neuron. If not present than right click.'
+```
+<img src = "extra/A_neuron.jpg" width=70% >
+
+Next, we click on any cell in the posterior of head. Again, any cell can be clicked on as long as it is posterior to the cell selected in anterior region in previous step.
+```
+ans =
+
+    'select A-(P) neuron. If not present than right click.'
+```
+<img src = "extra/P_neuron.jpg" width=70% >
+
+Next, we will click on two cells that will help in defining left-right (LR) axis. Since distinguishing between cells in the left and right region of head in current view of the image is difficult, we'll skip selecting these by right-clicking anywhere in the image
+```
+ans =
+
+    'select (L)-R neuron. If not present than right click.'
+
+
+ans =
+
+    'select L-(R) neuron. If not present than right click.'
+```
+Lastly, we will click on two cells that will help in defining dorsal-ventral (DV) axis.
+```
+ans =
+
+    'select (D)-V neuron. If not present than right click.'
+```
+<img src = "extra/D_neuron.jpg" width=70% >
+```
+ans =
+
+    'select D-(V) neuron. If not present than right click.'
+```
+<img src = "extra/V_neuron.jpg" width=70% >
+
 
 
 
