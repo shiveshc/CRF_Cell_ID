@@ -245,7 +245,7 @@ preprocess_data('sample_run\sample_data1',...
 	[],...
 	{image1,'sample_run\sample_data1\img1_markers','sample_run\sample_data1\img1_marker_names.xlsx'})
 ```
-In the above, automatic segmentation will be performed only for `image2` and not for `image1`.
+In the above, automatic segmentation will be performed only for `image2` and not for `image1`. Please take a look at `img1_markers` and `img1_marker_names.xlsx` files to see their formats.
 
 #### 2. Specifying landmarks in image channels
 Next, we'll specify landmark information in channels by going through each landmark channel one-by-one, selecting landmark cell in each channel (via user input) and entering the selected cell's name in terminal. A terminal prompt will ask for which image channels to use for specifying landmarks
@@ -304,6 +304,7 @@ Enter name of the selected landmark e.g. 'RMEL' -'AIBR'
 If done with this channel, enter 'y' -'y'
 ```
 `CRF_Cell_ID` **_automatically compiles landmark names saved in marker_name files_**
+
 Note, along with the landmark cells specified by users as above, cell names that may be present in marker_name.xlsx files are automatically added to the list of landmark cells. e.g. if we ran
 ```
 preprocess_data('sample_run\sample_data1',...
@@ -376,6 +377,19 @@ This should generate an image showing cells detected in image (red dots) and aut
 <img src = "extra/axes1.jpg" width=50% ><img src = "extra/axes2.jpg" width=50% >
 <img src = "extra/axes3.jpg" width=50% ><img src = "extra/axes4.jpg" width=50% >
 
+#### 4. Output files
+Finally we should see a message on the terminal
+```
+Preprocessing finished
+```
+Three output files are saved in the `output_folder` argument that we provided while running `preprocess_data`
+| File Name | Description |
+| --- | --- |
+| `data_annotation_sample_data1.mat` | File saving all relevant information that will be used in next step |
+| `segmented_img_r.tif` | segmented stack of the `img1` image channel. example segmentation and visualization in Vaa3D is shown below|
+| `segmented_img_2.tif` | segmented stack of the firdt image channel provided as input in `varargin`. segmented stacks of subsequent stacks are saved as well|
+
+<img src = "extra/output_labeled_img.jpg" width=50% ><img src = "extra/output_labeled_img_gif.gif" width=50% >
 
 
 
