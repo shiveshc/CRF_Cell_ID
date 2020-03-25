@@ -303,6 +303,17 @@ If done with this channel, enter 'y' -'n'
 Enter name of the selected landmark e.g. 'RMEL' -'AIBR'
 If done with this channel, enter 'y' -'y'
 ```
+`CRF_Cell_ID` **_automatically compiles landmark names saved in marker_name files_**
+Note, along with the landmark cells specified by users as above, cell names that may be present in marker_name.xlsx files are automatically added to the list of landmark cells. e.g. if we ran
+```
+preprocess_data('sample_run\sample_data1',...
+	'data_annotation_sample_data1',...
+	image2,...
+	[],...
+	[],...
+	{image1,'sample_run\sample_data1\img1_markers','sample_run\sample_data1\img1_marker_names.xlsx'})
+```
+then, the manually annotated names of cells present in `img1_marker_names.xlsx` are automatically added to the list of landmark cells. If the `img1_marker_names.xlsx` is empty then no names are added.
 
 #### 3. Select axes specifying cells
 Next, we'll select axes specifying cells via user input. These cells enable defining a consistent coordinate system in head which is crucical for accurately extracting features from image. To do so, the terminal prompt asks to sequentially click on cells in the image.
