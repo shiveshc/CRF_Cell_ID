@@ -428,4 +428,5 @@ function preprocess_data(out_folder,data_name,img_1,img_1_marker,img_1_marker_na
     landmark_names = landmark_names_orig;
     landmark_to_neuron_map = landmark_to_neuron_map_orig;
     save([out_folder,'\',data_name],'mu_r','mu_other_channels','labeled_img_r','labeled_img_other_channels','landmark_names','landmark_to_neuron_map','mu_c','img_1','varargin','cmap','ind_PCA','specify_PA','axes_neurons_to_neuron_map')
+    disp("Preprocessing finished")
 end
