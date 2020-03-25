@@ -389,7 +389,7 @@ Three output files are saved in the `output_folder` argument that we provided wh
 | `segmented_img_r.tif` | segmented stack of the `img1` image channel. example segmentation and visualization in Vaa3D is shown below|
 | `segmented_img_2.tif` | segmented stack of the firdt image channel provided as input in `varargin`. segmented stacks of subsequent stacks are saved as well|
 
-<img src = "extra/output_labeled_img.jpg" width=50% ><img src = "extra/output_labeled_img_gif.gif" width=50% >
+<img src = "extra/output_labeled_img.JPG" width=50% ><img src = "extra/output_labeled_img_gif.gif" width=50% >
 
 
 
