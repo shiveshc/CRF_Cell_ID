@@ -125,8 +125,8 @@ Inputs :
  img1_marker		Optional Vaa3d marker file if manually detected cells in img1. If not available set as []
  img1_marker_name	Optional .xlsx file storing the names of manually detected cells in img1. If not available set as []
  varargin		variable number of image channels that can be used as landmark channels. Each varargin is triplet combination of 
- 			image, marker file and marker name file e.g. {img,\img_marker,\img_marker_name.xlsx} or {img,[],[]} if manual
-			detection is not available.
+ 			image, marker file and marker name file e.g. {img,'\img_marker','\img_marker_name.xlsx'} or {img,[],[]} if
+			manual detection is not available.
 
 Outputs :
  data file		.mat data file that will be used as input in next step
@@ -389,7 +389,7 @@ Three output files are saved in the `output_folder` argument that we provided wh
 | `segmented_img_r.tif` | segmented stack of the `img1` image channel. example segmentation and visualization in Vaa3D is shown below|
 | `segmented_img_2.tif` | segmented stack of the firdt image channel provided as input in `varargin`. segmented stacks of subsequent stacks are saved as well|
 
-<img src = "extra/output_labeled_img.JPG" width=50% ><img src = "extra/output_labeled_img_gif.gif" width=50% >
+<img src = "extra/output_labeled_img_gif.gif" width=50% >
 
 
 
