@@ -84,7 +84,7 @@ cd '\CRF_Cell_ID' % provide full path of CRF_Cell_ID
 addpath('Main')
 ```
 
-### 1. Read image data
+## 1. Read image data
 The main function for reading image data is `read_tif` in `Main` folder.
 ```
 Inputs:
@@ -113,7 +113,7 @@ caxis([0,0.3])
 
 We'll predict identities of cells in the channel on the right and will use the channel on the left as landmark channel i.e. channel in which identities of cells are known. In practice `CRF_Cell_ID` supports any number of landmarks channels as will be shown below. Further, it is not necessary to know the identities of all cells in a landmark channel. Thus `CRF_Cell_ID` easily integrates available information from multiple channels.
 
-### 2. Preprocess data for annotation
+## 2. Preprocess data for annotation
 In this step we'll 1) detect all cells in each channel read in previous step. 2) specify landmark information 3) generate a coordinate axes in head, and 4) generate a data file that will be used as input in the next step. 
 
 The main script to do this is `preprocess_data` in `Main`
@@ -391,7 +391,7 @@ Three output files are saved in the `output_folder` argument that we provided wh
 
 <img src = "extra/output_labeled_img_gif.gif" width=50% >
 
-### 3. Predict identities
+## 3. Predict identities
 Once done with reading and preparing data for annotation, we'll run the core prediction algorithm. The main function to do is `annotation_CRF_landmark`
 
 ```
