@@ -22,8 +22,8 @@ This repository contains -
      - [Detecting cells in image channels](#1-detecting-cells-in-image-channels)
      - [Specifying landmarks](#2-specifying-landmarks-in-image-channels)
      - [Selecting axes speciying cells](#3-select-axes-specifying-cells)
-     - Output files
-   - Predict identities
+     - [Output files](#4-output-files)
+   - [Predict identities](#3-predict-identities)
    - Visualize prediction results
 4. Building data-driven atlas from annotated data
 
@@ -165,7 +165,7 @@ We'll enter 'n' becuase we are not satisfied with the chosen `thresh_parameter` 
 
 Since we're satisfied with this parameter, we'll enter 'y' on terminal this time. Now the GM model will be fitted to image data to segment cells. The terminal should look like
 ```
-Enter 'y' if accept thresh_parameter else enter 'n' -'y'
+Enter 'y' if accept thresh_parameter else enter 'n' - 'y'
 
 ans =
 
@@ -200,13 +200,13 @@ Next the same process will be repeated for all landmark channels. In this case, 
 ```
 Segmenting image channel 2
 Enter thresh_parameter value between 0-100. Higher values for detecting few but brightest cells - 99.98
-Enter 'y' if accept thresh_parameter else enter 'n' -'n'
+Enter 'y' if accept thresh_parameter else enter 'n' - 'n'
 Enter thresh_parameter value between 0-100. Higher values for detecting few but brightest cells - 99.97
 ```
 <img src = "extra/thresh_param_3.jpg" width=70% >
 
 ```
-Enter 'y' if accept thresh_parameter else enter 'n' -'y'
+Enter 'y' if accept thresh_parameter else enter 'n' - 'y'
 
 ans =
 
@@ -257,7 +257,7 @@ Enter which channels to use for specifying landmarks e.g [2,4] else enter blank 
 We'll use `image1` channel to specify identities of easily identified cells in whole-brain stack as well as the landmark channel i.e `image2`, thus, enter [1,2]. Note, here 1 always denotes the `img1` argument and channel 2 onwards denote images provided in `varargin`. If you do not want to specify landmarks in any channel, enter `[]`
 
 ```
-Enter which channels to use for specifying landmarks e.g [2,4] else enter blank (single quotes) -[1,2]
+Enter which channels to use for specifying landmarks e.g [2,4] else enter blank (single quotes) - [1,2]
 ```
 
 In this case we'll first see `image2` for selecting landmarks. With the cursors on the image, users can click on any cell whose identity they want to specify. We also get the following prompt on the terminal
@@ -271,7 +271,7 @@ Enter name of the selected landmark e.g. 'RMEL' -
 After clicking on desired cell in the image e.g. the one highlighted in image above, we enter its name on the terminal 'RMEV'.
 
 ```
-Enter name of the selected landmark e.g. 'RMEL' -'RMEV'
+Enter name of the selected landmark e.g. 'RMEL' - 'RMEV'
 ```
 
 Next we get the follwoing prompt
@@ -284,7 +284,7 @@ We'll enter 'n' since we want to select more landmark cells. When done, we'll en
 
 ```
 Enter name of the selected landmark e.g. 'RMEL' -'RMED'
-If done with this channel, enter 'y' -'y'
+If done with this channel, enter 'y' - 'y'
 ```
 
 Next, the same process will be performed one-by-one for each landmark channel specified above, `[1,2]` in our case. Thus we specify landmarks in `image1` next.
@@ -292,16 +292,16 @@ Next, the same process will be performed one-by-one for each landmark channel sp
 <img src = "extra/landmark_3.jpg" width=70% >
 
 ```
-Enter name of the selected landmark e.g. 'RMEL' -'ASGL'
-If done with this channel, enter 'y' -'n'
+Enter name of the selected landmark e.g. 'RMEL' - 'ASGL'
+If done with this channel, enter 'y' - 'n'
 
 ```
 
 <img src = "extra/landmark_4.jpg" width=70% >
 
 ```
-Enter name of the selected landmark e.g. 'RMEL' -'AIBR'
-If done with this channel, enter 'y' -'y'
+Enter name of the selected landmark e.g. 'RMEL' - 'AIBR'
+If done with this channel, enter 'y' - 'y'
 ```
 `CRF_Cell_ID` **_automatically compiles landmark names saved in marker_name files_**
 
@@ -370,7 +370,7 @@ Enter PCA coefficients for specifying AP, LR and DV axes e.g [1,2,3] or [1,3,2] 
 `CRF_Cell_ID` automatically generates AP, LR, and DV axes by PCA on cell postions. However we need to specify the correspondence between PCA eigenvectors and axes e.g [1,2,3] means PCA eignevectors 1, 2, and 3 correspond to AP, LR and DV axes respectively. Most of the time, eigenvectors corresponding to LR and DV axes flip thus either [1,2,3] or [1,3,2] input values work most of the times. We enter [1,3,2]
 
 ```
-Enter PCA coefficients for specifying AP, LR and DV axes e.g [1,2,3] or [1,3,2] -[1,3,2]
+Enter PCA coefficients for specifying AP, LR and DV axes e.g [1,2,3] or [1,3,2] - [1,3,2]
 ```
 This should generate an image showing cells detected in image (red dots) and automatically generated PA (blue), LR (green) and DV (black) axes. Sample views are shown below
 
@@ -390,6 +390,50 @@ Three output files are saved in the `output_folder` argument that we provided wh
 | `segmented_img_2.tif` | segmented stack of the firdt image channel provided as input in `varargin`. segmented stacks of subsequent stacks are saved as well|
 
 <img src = "extra/output_labeled_img_gif.gif" width=50% >
+
+### 3. Predict identities
+Once done with reading and preparing data for annotation, we'll run the core prediction algorithm. The main function to do is `annotation_CRF_landmark`
+
+```
+Inputs :
+ strain			strain type for which predicting identities. valid values are 'LandmarkStrain' if predicting identities
+ 			in landmark strain described in the paper or 'other' 
+ data			location path of the preprocessed data file generate by preprocess_data.m in previous step
+ out_file		location path where the results will be saved
+ node_pot_type		how to calculate node potentials. valid inputs are -
+ 			'uniform' - equal probability of each cell taking each label
+			'ap' - based on position of cells along the anterior-posterior axis
+			'reg' - affinities based on registration based matching with the atlas
+			'col' - based on proximity of color in image to color in atlas
+ numLabelRemove		number of cells missing in the image, required to account for missing cells while predicting.
+ 			requires multiple runs thus useful if running on cluster else set to 0
+ varargin		named-value pair arguments that include - 
+ 			'weights' - 1-by-5 array specifying weights of features in model e.g [1,1,1,1,1] for PA, LR, DV, proximity
+			angular relationship feature
+
+Outputs :
+ results file		output file that stored predicted identities
+```
+
+To do so we run
+
+```
+annotation_CRF_landmark('other',...
+	'sample_run\sample_data1\data_annotation_sample_data1',...
+	'sample_run\sample_data1\results_annotation_sample_data1',...
+	'ap',...
+	0)
+```
+
+or if we want to tune the weight of features, we run
+```
+annotation_CRF_landmark('other',...
+	'sample_run\sample_data1\data_annotation_sample_data1',...
+	'sample_run\sample_data1\results_annotation_sample_data1',...
+	'ap',...
+	0,...
+	'weights',[1,1,1,1,1])
+```
 
 
 
