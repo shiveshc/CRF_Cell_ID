@@ -9,6 +9,13 @@
 %%%            4. generate a data file for annotation step
 
 function preprocess_data(out_folder,data_name,img_1,img_1_marker,img_1_marker_name,varargin)
+    
+    p = inputParser;
+    addRequired(p,'out_folder',@ischar)
+    addRequired(p,'data_name',@ischar)
+    addRequired(p,'img_1',@checkImg1)
+    parse(p,out_folder,data_name,img_1)
+
     if ~exist('img_1')
         disp("Please provide the image in which cells are to be identified. Exiting.")
         return
@@ -287,7 +294,7 @@ function preprocess_data(out_folder,data_name,img_1,img_1_marker,img_1_marker_na
 
     %%%%%%% manually label landmark neurons by taking user input %%%%%%%
     mu_to_map = mu_r;
-    landmark_channels = input("Enter which channels to use for specifying landmarks e.g [2,4] else enter blank (single quotes) -");
+    landmark_channels = input("Enter which channels to use for specifying landmarks e.g [2,4] else enter blank (single quotes) - ");
     if isempty(landmark_channels)
         mu_c = [];
         landmark_names_orig = {};
@@ -307,13 +314,13 @@ function preprocess_data(out_folder,data_name,img_1,img_1_marker,img_1_marker_na
                     caxis([0,0.3])
                     hold on
                     scatter(curr_mu(:,1),curr_mu(:,2),'.r')
-                    title(["Click on a landmark cell, then enter its name on terminal e.g. 'RMEL'"])
+                    disp("Click on a landmark cell, then enter its name on terminal e.g. 'RMEL'")
                     [x,y,button] = ginput(1);
                     close all
                     mu_curr_channel = [mu_curr_channel;x,y]; %%% check the coordinate system
-                    curr_name = input("Enter name of the selected landmark e.g. 'RMEL' -");
+                    curr_name = input("Enter name of the selected landmark e.g. 'RMEL' - ");
                     landmark_names_orig = cat(1,landmark_names_orig,curr_name);
-                    channel_done = input("If done with this channel, enter 'y' -");
+                    channel_done = input("If done with this channel, enter 'y' - ");
                 end
                 dist_mat = repmat(diag(mu_curr_channel*mu_curr_channel'),1,size(mu_to_map(:,1:2),1)) + repmat(diag(mu_to_map(:,1:2)*mu_to_map(:,1:2)')',size(mu_curr_channel,1),1) - 2*mu_curr_channel*mu_to_map(:,1:2)';
                 [sort_dist,sort_index] = sort(dist_mat,2);
@@ -328,13 +335,13 @@ function preprocess_data(out_folder,data_name,img_1,img_1_marker,img_1_marker_na
                     caxis([0,0.3])
                     hold on
                     scatter(curr_mu(:,1),curr_mu(:,2),'.r')
-                    title(["Click on a landmark cell, then enter its name on terminal e.g. 'RMEL'"])
+                    disp("Click on a landmark cell, then enter its name on terminal e.g. 'RMEL'")
                     [x,y,button] = ginput(1);
                     close all
                     mu_curr_channel = [mu_curr_channel;x,y]; %%% check the coordinate system
-                    curr_name = input("Enter name of the selected landmark e.g. 'RMEL' -");
+                    curr_name = input("Enter name of the selected landmark e.g. 'RMEL' - ");
                     landmark_names_orig = cat(1,landmark_names_orig,curr_name);
-                    channel_done = input("If done with this channel, enter 'y' -");
+                    channel_done = input("If done with this channel, enter 'y' - ");
                 end
                 dist_mat = repmat(diag(mu_curr_channel*mu_curr_channel'),1,size(mu_to_map(:,1:2),1)) + repmat(diag(mu_to_map(:,1:2)*mu_to_map(:,1:2)')',size(mu_curr_channel,1),1) - 2*mu_curr_channel*mu_to_map(:,1:2)';
                 [sort_dist,sort_index] = sort(dist_mat,2);
@@ -347,7 +354,18 @@ function preprocess_data(out_folder,data_name,img_1,img_1_marker,img_1_marker_na
     %%%%% include landmark information from marker files if available
     if and(~isempty(img_1_marker),~isempty(img_1_marker_name))
         [X,Y,Z,marker_name,marker_index] = read_marker_files(img_1_marker,img_1_marker_name);
-        mu_marker = [X,Y,Z];
+        % remove duplicate marker names that were specified manually
+        ind_remove = [];
+        for n = 1:size(marker_name,1)
+            ind_remove = [];
+            if find(strcmp(marker_name{n,1},landmark_names_orig))
+                ind_remove = [ind_remove;n];
+            end
+        end
+        mu_marker = [X(marker_index),Y(marker_index),Z(marker_index)];
+        mu_marker(ind_remove,:) = [];
+        marker_name(ind_remove,:) = [];
+        
         dist_mat = repmat(diag(mu_marker*mu_marker'),1,size(mu_r,1)) + repmat(diag(mu_r*mu_r')',size(mu_marker,1),1) - 2*mu_marker*mu_r';
         [sort_dist,sort_index] = sort(dist_mat,2);
         ind_change = find(sort_dist(:,1) > 64);
@@ -363,7 +381,18 @@ function preprocess_data(out_folder,data_name,img_1,img_1_marker,img_1_marker_na
         curr_chan = varargin{1,chan};
         if and(~isempty(curr_chan{1,2}),~isempty(curr_chan{1,3}))
             [X,Y,Z,marker_name,marker_index] = read_marker_files(curr_chan{1,2},curr_chan{1,3});
-            mu_marker = [X,Y,Z];
+            % remove duplicate marker names that were specified manually
+            ind_remove = [];
+            for n = 1:size(marker_name,1)
+                ind_remove = [];
+                if find(strcmp(marker_name{n,1},landmark_names_orig))
+                    ind_remove = [ind_remove;n];
+                end
+            end
+            mu_marker = [X(marker_index),Y(marker_index),Z(marker_index)];
+            mu_marker(ind_remove,:) = [];
+            marker_name(ind_remove,:) = [];
+            
             dist_mat = repmat(diag(mu_marker*mu_marker'),1,size(mu_r,1)) + repmat(diag(mu_r*mu_r')',size(mu_marker,1),1) - 2*mu_marker*mu_r';
             [sort_dist,sort_index] = sort(dist_mat,2);
             ind_change = find(sort_dist(:,1) > 64);
@@ -385,7 +414,7 @@ function preprocess_data(out_folder,data_name,img_1,img_1_marker,img_1_marker_na
     %%%%%%%%%%%%%% define axes param based on PCA
     mu_r_centered = mu_r - repmat(mean(mu_r),size(mu_r,1),1);
     [coeff,score,latent] = pca(mu_r_centered);
-    axes_param = input("Enter PCA coefficients for specifying AP, LR and DV axes e.g [1,2,3] or [1,3,2] -");
+    axes_param = input("Enter PCA coefficients for specifying AP, LR and DV axes e.g [1,2,3] or [1,3,2] - ");
     PA = coeff(:,axes_param(1,1))';
     PA = PA/norm(PA);
     LR = coeff(:,axes_param(1,2))';
@@ -427,6 +456,15 @@ function preprocess_data(out_folder,data_name,img_1,img_1_marker,img_1_marker_na
     specify_PA = 0; %%% set to 1 if for non-pca axes generation - want to define PA axis using PCA
     landmark_names = landmark_names_orig;
     landmark_to_neuron_map = landmark_to_neuron_map_orig;
-    save([out_folder,'\',data_name],'mu_r','mu_other_channels','labeled_img_r','labeled_img_other_channels','landmark_names','landmark_to_neuron_map','mu_c','img_1','varargin','cmap','ind_PCA','specify_PA','axes_neurons_to_neuron_map')
+    save([out_folder,'\',data_name],'mu_r','mu_other_channels','labeled_img_r','labeled_img_other_channels','landmark_names','landmark_to_neuron_map','mu_c','img_1','varargin','cmap','ind_PCA','specify_PA','axes_neurons_to_neuron_map','axes_param')
     disp("Preprocessing finished")
+end
+
+function TF = checkImg1(x)
+    TF = false;
+    if isempty(x)
+        error("Please provide image in which cells are to be identified")
+    else
+        TF = true;
+    end
 end

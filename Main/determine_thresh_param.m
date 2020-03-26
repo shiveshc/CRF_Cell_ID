@@ -21,6 +21,6 @@ function [thresh_param,accept_thresh,index_thresh_new] = determine_thresh_param(
     scatter(y_thresh,x_thresh,'.g')
     scatter(y_thresh_new,x_thresh_new,'.r')
     text(30,30,['Number of detected cells - ',num2str(size(x_thresh_new,1))],'Color','white')
-    accept_thresh = input("Enter 'y' if accept thresh_parameter else enter 'n' -");
+    accept_thresh = input("Enter 'y' if accept thresh_parameter else enter 'n' - ");
     close all
 end

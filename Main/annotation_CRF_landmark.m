@@ -11,15 +11,24 @@
 % 3. num - a variable to keep track of iterations if considering missing
 %          cells. If not running iterations set to 1
 
-function annotation_CRF_landmark(application,data,out_file,node_pot_uniform,numLabelRemove)
+function annotation_CRF_landmark(strain,data,out_file,node_pot_type,numLabelRemove,varargin)
+
+p = inputParser;
+addRequired(p,'strain',@checkStrain)
+addRequired(p,'data',@ischar)
+addRequired(p,'out_file',@ischar)
+addRequired(p,'node_pot_type',@checkNodePotType)
+addParameter(p,'weights',[0,0,0,0,1],@checkWeights)
+parse(p,strain,data,out_file,node_pot_type,varargin{:})
+
 rng shuffle
-addpath(genpath('CRF_Cell_ID\UGM'))
+addpath(genpath('UGM'))
 
 %%% load image data and atlas data
 % Change input directories here for your data.
 % Static atlas is 'data_neuron_relationship.mat' file provided
-load(['CRF_Cell_ID\application',data,'.mat'])
-load('CRF_Cell_ID\util\data_neuron_relationship_annotation_updated.mat')
+load([data,'.mat'])
+load('utils\data_neuron_relationship_annotation_updated.mat')
 
 %%% remove missing cells from atlas
 dont_remove = zeros(size(landmark_names,1),1);
@@ -59,18 +68,10 @@ X_rot_norm(remove_index,:) = [];
 PA = [];
 LR = [];
 DV = [];
-if strcmp(application,'LandmarkStrain')
-    if or(~exist('landmark_names','var'),~exist('landmark_to_neuron_map','var'))
-        disp('Please re-run "preprocess_landmark_data.m" and specify landmark cell names')
-        return
-    else
-        [PA,LR,DV] = generate_coordinate_axes_landmark(application,mu_r,landmark_to_neuron_map,axes_param,landmark_names,ind_PCA,specify_PA);
-    end
-else
-    [PA,LR,DV] = generate_coordinate_axes_other_with_landmarks(application,mu_r,axes_param,axes_neurons_to_neuron_map,ind_PCA,specify_PA);
-end
-disp('Created axes')
+[PA,LR,DV] = generate_coordinate_axes(strain,mu_r,landmark_to_neuron_map,axes_param,axes_neurons_to_neuron_map,landmark_names,ind_PCA,specify_PA);
+disp('1. Created axes')
 % take neurons coordinates to AP, LR, DV axis
+mu_r_centered = mu_r - repmat(mean(mu_r),size(mu_r,1),1);
 X = mu_r_centered*PA';
 Y = mu_r_centered*LR';
 Z = mu_r_centered*DV';
@@ -113,23 +114,33 @@ edgeStruct = UGM_makeEdgeStruct(adj,nStates);
 %%% create node potentials. Two methods can be used to initialize node
 %%% potentials. 1) Uniform probability of each node taking each label in
 %%% atlas. 2) Potential based on distance along AP axis
-if node_pot_uniform == 1
+if strcmp(node_pot_type,'uniform')
     node_pot =  ones(nNodes,nStates);
-else
+elseif strcmp(node_pot_type,'ap')
     loc_sigma = 0.2;
     node_pot = zeros(nNodes,nStates);
     for i = 1:nNodes
         node_pot(i,:) = diag(exp(-((ones(size(X_rot_norm))*X_norm(i,1) - X_rot_norm)*(ones(size(X_rot_norm))*X_norm(i,1) - X_rot_norm)')/(2*loc_sigma^2)))';
     end
+elseif strcmp(node_pot_type,'reg')
+    addpath(genpath('CPD2'))
+    node_pot = reg_based_node_potential(X,Y,Z,X_rot,Y_rot,Z_rot);
+elseif strcmp(node_pot_type,'col')
+    if isempty(col_atlas)
+        disp("Please provide color atlas path (last argument of the function). Exiting.")
+    else
+        load('Main\all_col_int')
+        node_pot = col_based_node_potential(all_col_int,data_int,Neuron_head);
+    end
 end
-disp('created node potential')
+disp('2. Created node potentials')
 
 %%% create edge potentials
-lambda_PA = 0;
-lambda_LR = 0;
-lambda_DV = 0;
-lambda_geo = 0;
-lambda_angle = 1;
+lambda_PA = p.Results.weights(1,1);
+lambda_LR = p.Results.weights(1,2);
+lambda_DV = p.Results.weights(1,3);
+lambda_geo = p.Results.weights(1,4);
+lambda_angle = p.Results.weights(1,5);
 for i = 1:edgeStruct.nEdges
     node1 = edgeStruct.edgeEnds(i,1);
     node2 = edgeStruct.edgeEnds(i,2);
@@ -167,7 +178,7 @@ for i = 1:edgeStruct.nEdges
     pot = pot - diag(diag(pot)) + 0.001*eye(size(pot,1)); 
     edge_pot(:,:,i) = pot;
 end
-disp('created edge potentials')
+disp('3. Created edge potentials')
 
 %%% clamp potential based on landmarks
 clamped = zeros(nNodes,1);
@@ -178,7 +189,7 @@ if exist('landmark_to_neuron_map','var')
 end
 
 %%% Optimize graphical model using Loopy Belief Propagation
-disp('starting optimization')
+disp('4. Starting optimization')
 [nodeBel,edgeBel,logZ] = UGM_Infer_Conditional(node_pot,edge_pot,edgeStruct,clamped,@UGM_Infer_LBP);
 conserved_nodeBel = nodeBel; %node belief matrix to maintain marginal probabilities after clamping in subsequent steps
 % optimal_decode = UGM_Decode_Conditional(node_pot,edge_pot,edgeStruct,clamped,@UGM_Decode_LBP);
@@ -187,7 +198,7 @@ curr_labels = nodeBel_sort_index(:,1);
 [PA_score,LR_score,DV_score,geodist_score,tot_score] = consistency_scores(nNodes,curr_labels,X,Y,Z,PA_matrix,LR_matrix,DV_matrix,geo_dist,geo_dist_r);
 
 %%% handle duplicate assignments 
-disp('resolving duplicates')
+disp('5. Resolving duplicates and re-running optimization')
 orig_state_array = [1:1:size(Neuron_head,1)]';
 if exist('landmark_to_neuron_map','var')
     clamped_neurons = landmark_to_neuron_map;
@@ -281,7 +292,7 @@ while find(node_label(:,1) == 0)
 end
 
 %%% save experiments results
-disp('saving results')
+disp('6. Saving prediction')
 experiments = struct();
 experiments(1).K = K;
 experiments(1).lambda_PA = lambda_PA;
@@ -306,3 +317,23 @@ experiments(1).Neuron_head = Neuron_head;
 %     experiments(1).landmark_names = landmark_names;
 %     experiments(1).landmark_to_neuron_map = landmark_to_neuron_map;
 save(out_file,'experiments')
+end
+
+function TF = checkWeights(x)
+   TF = false;
+   if or(size(x,2) > 5,size(x,2) < 5) 
+       error('weights must be 1-by-5 array');
+   else
+       TF = true;
+   end
+end
+function TF = checkStrain(x)
+    TF = false;
+    validStrain = {'other','LandmarkStrain'};
+    TF = any(validatestring(x,validStrain));
+end
+function TF = checkNodePotType(x)
+    TF = false;
+    validNodePotType = {'uniform','ap','reg','col'};
+    TF = any(validatestring(x,validNodePotType));
+end
