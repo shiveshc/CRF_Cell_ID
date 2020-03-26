@@ -141,7 +141,7 @@ preprocess_data('sample_run\sample_data1',...
 	[],...
 	{image1,[],[]})
 ```
-#### 1. Detecting cells in image channels
+### 1. Detecting cells in image channels
 The output on terminal should look like
 ```
 Segmenting main image channel ... 
@@ -247,7 +247,7 @@ preprocess_data('sample_run\sample_data1',...
 ```
 In the above, automatic segmentation will be performed only for `image2` and not for `image1`. Please take a look at `img1_markers` and `img1_marker_names.xlsx` files to see their formats.
 
-#### 2. Specifying landmarks in image channels
+### 2. Specifying landmarks in image channels
 Next, we'll specify landmark information in channels by going through each landmark channel one-by-one, selecting landmark cell in each channel (via user input) and entering the selected cell's name in terminal. A terminal prompt will ask for which image channels to use for specifying landmarks
 
 ```
@@ -316,7 +316,7 @@ preprocess_data('sample_run\sample_data1',...
 ```
 then, the manually annotated names of cells present in `img1_marker_names.xlsx` are automatically added to the list of landmark cells. If the `img1_marker_names.xlsx` is empty then no names are added.
 
-#### 3. Select axes specifying cells
+### 3. Select axes specifying cells
 Next, we'll select axes specifying cells via user input. These cells enable defining a consistent coordinate system in head which is crucical for accurately extracting features from image. To do so, the terminal prompt asks to sequentially click on cells in the image.
 
 First, we will click on two cells in the image, one in the anterior and one in the posterior region of the head. These cells will be used to define the anterior-posterior (AP) axis. Here, users can click on any cell; the specific identity of selected cell doesn't matter as these cells are used only to check the consistency of axis direction. First, we click on a cell that in the anterior of the head ganglion in the image
@@ -377,7 +377,7 @@ This should generate an image showing cells detected in image (red dots) and aut
 <img src = "extra/axes1.jpg" width=50% ><img src = "extra/axes2.jpg" width=50% >
 <img src = "extra/axes3.jpg" width=50% ><img src = "extra/axes4.jpg" width=50% >
 
-#### 4. Output files
+### 4. Output files
 Finally we should see a message on the terminal
 ```
 Preprocessing finished
