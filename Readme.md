@@ -1,5 +1,5 @@
 ## News
-05/28 - v2 of CRF cell ID will be coming out soon with superfast optimization techniques enabling real-time cell annotation!!
+05/28 - v2 of `CRF_Cell_ID` will be coming out soon with superfast optimization techniques enabling real-time cell annotation!!
 # CRF Cell I
 
 <img src = "extra/readme_img_v2.jpg" width=45% align="right">
