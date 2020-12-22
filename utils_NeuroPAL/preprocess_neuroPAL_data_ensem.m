@@ -13,8 +13,8 @@
 %%%          2. input_2 folder specifies the location where data file will
 %%%             be saved and locations of marker files
 
-input_1 = {'C:\Users\Shivesh\Dropbox (GaTech)\PhD\GlobalBrainCode\GlobalBrainTrackingNew\functions\Annotation_CRF\NeuroPAL_validation\20190710_OH15495_array\27'};
-input_2 = {'C:\Users\Shivesh\Dropbox (GaTech)\PhD\GlobalBrainCode\GlobalBrainTrackingNew\functions\Annotation_CRF\NeuroPAL_validation\20190710_OH15495_array\27'};
+input_1 = {'C:\Users\Shivesh\Dropbox (GaTech)\PhD\GlobalBrainCode\GlobalBrainTrackingNew\functions\Annotation_CRF\NeuroPAL_validation\20190720_OH15495_array\13'};
+input_2 = {'C:\Users\Shivesh\Dropbox (GaTech)\PhD\GlobalBrainCode\GlobalBrainTrackingNew\functions\Annotation_CRF\NeuroPAL_validation\20190720_OH15495_array\13'};
 
 %%%%%%%%%%%%%%%% read images
 curr_files = dir([input_2{1,1}]);
@@ -51,8 +51,8 @@ end
 [X,Y,Z,marker_name,marker_index] = read_marker_files(input_2{1,1});
 % [X,Y,Z] = read_marker_files_wo_marker_name(input_2{1,1});
 mu_r = [X,Y,Z];
-ind_PCA = 1;
-axes_param = [1,3,2];
+ind_PCA = 0;
+axes_param = [1,2,3];
 specify_PA = 0;
 %%%%%%%%%%%%%%%%%%%%%% create marker to neuron map
 
@@ -208,23 +208,23 @@ if ind_rotate == 1
 end
 
 %%%%%%%%%%%%%%%%% get intensity distributions of neurons %%%%%%%%%%%%
-%imadjust
-g_norm = imadjustn(mat2gray(thisimage_g),[0;0.8],[0;1],0.8);
-b_norm = imadjustn(mat2gray(thisimage_b),[0;0.4],[0;1],0.8);
-r_norm = imadjustn(mat2gray(thisimage_r),[0;0.5],[0;1],0.8);
+% %imadjust
+thisimage_g_imadj = imadjustn(mat2gray(thisimage_g),[0;0.8],[0;1],0.8);
+thisimage_b_imadj = imadjustn(mat2gray(thisimage_b),[0;0.4],[0;1],0.8);
+thisimage_r_imadj = imadjustn(mat2gray(thisimage_r),[0;0.5],[0;1],0.8);
 
 % col const
-thisimage_r = double(r_norm);
-thisimage_g = double(g_norm);
-thisimage_b = double(b_norm);
-norm_mat = [thisimage_r(:),thisimage_g(:),thisimage_b(:)];
+norm_mat = [double(thisimage_r(:)),double(thisimage_g(:)),double(thisimage_b(:))];
 for n = 1:10
     norm_mat = norm_mat./repmat(sum(norm_mat),size(norm_mat,1),1);
     norm_mat = norm_mat./repmat(sum(norm_mat,2),1,size(norm_mat,2));
 end
-thisimage_r_norm = reshape(norm_mat(:,1),size(thisimage_r,1),size(thisimage_r,2),size(thisimage_r,3));
-thisimage_g_norm = reshape(norm_mat(:,2),size(thisimage_g,1),size(thisimage_g,2),size(thisimage_g,3));
-thisimage_b_norm = reshape(norm_mat(:,3),size(thisimage_b,1),size(thisimage_b,2),size(thisimage_b,3));
+thisimage_r_colconst = reshape(norm_mat(:,1),size(thisimage_r,1),size(thisimage_r,2),size(thisimage_r,3));
+thisimage_g_colconst = reshape(norm_mat(:,2),size(thisimage_g,1),size(thisimage_g,2),size(thisimage_g,3));
+thisimage_b_colconst = reshape(norm_mat(:,3),size(thisimage_b,1),size(thisimage_b,2),size(thisimage_b,3));
+thisimage_r_colconst_norm = mat2gray(thisimage_r_colconst);
+thisimage_g_colconst_norm = mat2gray(thisimage_g_colconst);
+thisimage_b_colconst_norm = mat2gray(thisimage_b_colconst);
 
 %hsv
 % r_mat = thisimage_r(:);
@@ -232,25 +232,30 @@ thisimage_b_norm = reshape(norm_mat(:,3),size(thisimage_b,1),size(thisimage_b,2)
 % b_mat = thisimage_b(:);
 % hsv_mat = rgb2hsv(r_mat/max(r_mat),g_mat/max(g_mat),b_mat/max(b_mat));
 
-thisimage_r = thisimage_r_norm;
-thisimage_g = thisimage_g_norm;
-thisimage_b = thisimage_b_norm;
-data_int = [];
+data_int_imadj = [];
+data_int_colconst_norm = [];
 for an = 1:size(X,1)
     X_range = max(round(X(an,1)) - 2,1):1:min(round(X(an,1))+2,size(thisimage_r,2));
     Y_range = max(round(Y(an,1)) - 2,1):1:min(round(Y(an,1))+2,size(thisimage_r,1));
     Z_range = max(round(Z(an,1)) - 1,1):1:min(round(Z(an,1))+1,size(thisimage_r,3));
     [x,y,z] = meshgrid(Y_range,X_range,Z_range);
     pixels = sub2ind(size(thisimage_r),x(:),y(:),z(:));
-    R_int = thisimage_r(pixels);
-    G_int = thisimage_g(pixels);
-    B_int = thisimage_b(pixels);
-
-    data_int(an).R_int = R_int;
-    data_int(an).G_int = G_int;
-    data_int(an).B_int = B_int;
+    
+    R_int = thisimage_r_imadj(pixels);
+    G_int = thisimage_g_imadj(pixels);
+    B_int = thisimage_b_imadj(pixels);
+    data_int_imadj(an).R_int = R_int;
+    data_int_imadj(an).G_int = G_int;
+    data_int_imadj(an).B_int = B_int;
+    
+    R_int_colconst = thisimage_r_colconst_norm(pixels);
+    G_int_colconst = thisimage_g_colconst_norm(pixels);
+    B_int_colconst = thisimage_b_colconst_norm(pixels);
+    data_int_colconst_norm(an).R_int = R_int_colconst;
+    data_int_colconst_norm(an).G_int = G_int_colconst;
+    data_int_colconst_norm(an).B_int = B_int_colconst;
 end
 
 %%%%%%%%%%%%%%%%% save data for full image annotation
-save([input_2{1,1},'\data_20190710_27_imadjust_colconst'],'mu_r','marker_index','marker_name','axes_param','ind_PCA','data_int')
-% save([input_2{1,1},'\data_20190720_13_v2'],'mu_r','axes_neurons_to_neuron_map','ind_PCA','specify_PA','data_int','axes_param')
+% save([input_2{1,1},'\data_20190710_27_ensem_imadj_colconstnorm'],'mu_r','marker_index','marker_name','axes_param','ind_PCA','data_int_imadj','data_int_colconst_norm')
+save([input_2{1,1},'\data_20190720_13_nonpca_ensem_imadj_colconstnorm'],'mu_r','axes_neurons_to_neuron_map','ind_PCA','specify_PA','data_int_imadj','data_int_colconst_norm','axes_param')

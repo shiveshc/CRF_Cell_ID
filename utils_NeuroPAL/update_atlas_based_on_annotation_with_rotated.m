@@ -144,4 +144,4 @@ end
 DV_matrix = DV_matrix_data;
 LR_matrix = LR_matrix_data;
 PA_matrix = PA_matrix_data;
-save('C:\Users\Shivesh\Dropbox (GaTech)\PhD\GlobalBrainCode\GlobalBrainTrackingNew\functions\Annotation_CRF\NeuroPAL_validation\data_neuron_relationship_annotation_updated_both','DV_matrix','eigval','eigvec','ganglion','geo_dist','LR_matrix','LR_neurons','LR_neurons_matrix','Neuron_head','PA_matrix','VC_neurons','X_rot','X_rot_norm','Y_rot','Z_rot','angle_vec_atlas')
+save('C:\Users\Shivesh\Dropbox (GaTech)\PhD\GlobalBrainCode\GlobalBrainTrackingNew\functions\Annotation_CRF\NeuroPAL_validation\prediction_NeuroPAL\RotatedStrains\data_neuron_relationship_annotation_updated_latonly','DV_matrix','eigval','eigvec','ganglion','geo_dist','LR_matrix','LR_neurons','LR_neurons_matrix','Neuron_head','PA_matrix','VC_neurons','X_rot','X_rot_norm','Y_rot','Z_rot','angle_vec_atlas')
