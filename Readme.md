@@ -261,13 +261,13 @@ In the above, automatic segmentation will be performed only for `image2` and not
 Next, we'll specify landmark information in channels by going through each landmark channel one-by-one, selecting landmark cell in each channel (via user input) and entering the selected cell's name in terminal. A terminal prompt will ask for which image channels to use for specifying landmarks
 
 ```
-Enter which channels to use for specifying landmarks e.g [2,4] else enter blank as \'\' -
+Enter which channels to use for specifying landmarks e.g [2,4] else enter blank (as single quotes) `''` -
 ```
 
 We'll use `image1` channel to specify identities of easily identified cells in whole-brain stack as well as the landmark channel i.e `image2`, thus, enter [1,2]. Note, here 1 always denotes the `img1` argument and channel 2 onwards denote images provided in `varargin`. If you do not want to specify landmarks in any channel, enter `[]`
 
 ```
-Enter which channels to use for specifying landmarks e.g [2,4] else enter blank - [1,2]
+Enter which channels to use for specifying landmarks e.g [2,4] else enter blank (as single quotes) - [1,2]
 ```
 
 In this case we'll first see `image2` for selecting landmarks. With the cursors on the image, users can click on any cell whose identity they want to specify. We also get the following prompt on the terminal
