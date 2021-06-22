@@ -397,7 +397,7 @@ Three output files are saved in the `output_folder` argument that we provided wh
 | --- | --- |
 | `data_annotation_sample_data1.mat` | File saving all relevant information that will be used in next step |
 | `segmented_img_r.tif` | segmented stack of the `img1` image channel. example segmentation and visualization in Vaa3D is shown below|
-| `segmented_img_2.tif` | segmented stack of the firdt image channel provided as input in `varargin`. segmented stacks of subsequent stacks are saved as well|
+| `segmented_img_2.tif` | segmented stack of the first landmark image channel (channel corresponding to `image1` for us ) provided as input in `varargin`. segmented stacks of subsequent stacks are saved as well|
 
 <img src = "extra/output_labeled_img_gif.gif" width=50% >
 
