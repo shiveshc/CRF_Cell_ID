@@ -562,9 +562,17 @@ relationships observed in real experimental data. In comparison static atlases s
 
 Another important factor to keep in mind for cell annotation is to build complete atlas encompassing all cells. This is because, due to either expression mosaicism or cell detection errors, not all cells may be present in data. But which cells are missing from data is difficult to define a priori. Thus, a complete atlas provides unbiased chance to all cells in data to take any label from atlas. An incomplete atlas is limited in assigning only the labels present in atlas to data while those cells may be missing from data.
 
-To build data driven atlase, use following code in `Main`
-```
 
+To build data driven atlas using annotated data, the main function is `update_atlas_based_on_annotation.,` in `Main`. This function compiles all the manually annotated data available using `compile_annotated_data.m`, calculates positional relationship features among cells in annotated data and then updates the OpenWorm atlas or any pre-existing base atlas with new features.
+
+For this example we'll use the manually annotated data generated using NeuroPAL strains available at `Datasets\NeuroPAL\*`. Paths of annotated data folders must be specified in `compile_annotated_data.m`. Annotated data is stored in two files in these folders - 
+1. `markers` - Marker file generated using Vaa3D that stores X, Y, Z positions of all annotated cells
+2. `marker_names.xlsx` - Spreadsheet that records annotated identities for cells in `markers` file.
+
+To build a data driven atlas, run
+```
+update_atlas_based_on_annotation
+```
 
 
 
