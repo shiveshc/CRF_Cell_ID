@@ -28,7 +28,7 @@ addpath(genpath('UGM'))
 % Change input directories here for your data.
 % Static atlas is 'data_neuron_relationship.mat' file provided
 load([data,'.mat'])
-load('utils\data_neuron_relationship_annotation_updated.mat')
+load('sample_run\data_neuron_relationship_annotation_updated.mat')
 
 %%% remove missing cells from atlas
 dont_remove = zeros(size(landmark_names,1),1);
