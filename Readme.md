@@ -401,6 +401,42 @@ Three output files are saved in the `output_folder` argument that we provided wh
 
 <img src = "extra/output_labeled_img_gif.gif" width=50% >
 
+Now let's look at the variables stored in the file `data_annotation_sample_data1.mat`. If we load the file in matlab using
+```
+load('sample_run\sample_data1\data_annotation_sample_data1.mat')
+```
+we get following variables in matlab workspace.
+
+```
+axes_neurons_to_neuron_map		a 6-by-1 vector map specifying the indices of the cells in the segmented main image channel that we 
+					selected for specifying anterior (A), posterior (P), left (L), right (R), dorsal (D) and ventral
+					(V) axis in the previous section
+axes_param				axes parameter specified in previous section
+cmap					color useful to visualize cell segmentations in image channel
+img_1					3D img stack for the main image channel in which cell identities are to be annotated
+ind_PCA					an internal parameter that tells that PCA is to be used for specifyig AP, LR and DV axes
+labeled_img_other_channels		a 1-by-n cell array storing segmentations of n landmark channels provided in preprocess_data command
+labeled_img_r				3D segmented stack of main channel in which cell identities are to be annotated
+landmark_names				n-by-1 cell array specifying names of all landmarks provided by user input or read from files provided
+					in preprocess_data command
+landmark_to_neuron_map			n-by-1 vector specifying the indices of cells in the segmented main channel corresponding to landmarks
+					we selected manually and named or provided
+mu_c					n-by-3 matrix storing the center coordinates of landmarks in all landmark channels that we manually named
+					or provided
+mu_other_channels			a 1-by-n cell array storing center coordinates of all cells segmented in n landmark channels
+mu_r					k-by-3 matrix storing the center coordinates of all cells segmented in main channel. These segmented cells
+					identities will be automatically annotated
+specify_PA				an internal parameter that tells that 1st PC is to be used for specifyig AP
+varargin				3D img stack of all landmark channels provided as input in preprocess_data command
+```
+
+e.g. if you wish to visualize how the segmentation of the `image2' looks, simply run
+```
+figure, imshow(max(img_1, [], 3), cmap, 'border', 'tight')
+```
+<img src = "extra/labeled_img_r.png" width=50% >
+
+
 ## 3. Predict identities
 Once done with reading and preparing data for annotation, we'll run the core prediction algorithm. The main function to do is `annotation_CRF_landmark`
 
