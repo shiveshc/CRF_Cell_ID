@@ -537,7 +537,7 @@ To visualize all cells' prediction simultaneously, use the following snippet
 ```
 visualize_annotation_output(img_1, mu_r, experiments(1).node_label(:, 1), experiments(1).Neuron_head, [])
 ```
-<img src = "extra/annotation_output_all.jpg" width=50% >
+<img src = "extra/annotation_output_all.jpg" width=100% >
 
 
 
