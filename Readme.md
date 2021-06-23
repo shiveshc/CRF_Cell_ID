@@ -473,7 +473,7 @@ Inputs :
 			angular relationship feature
 
 Outputs :
- results file		output file that stored predicted identities
+ results file		output file that stores predicted identities of all cells in main image channel
 ```
 
 To do so we run
@@ -525,7 +525,7 @@ To visualize prediction results, use function `visualize_annotation_output` in `
 
 ```
 load('sample_run\sample_data1\data_annotation_sample_data1.mat')
-load('sample_run\sample_data1\data_annotation_sample_data1.mat')
+load('sample_run\sample_data1\results_annotation_sample_data1.mat')
 ```
 
 Then, to visualize ith cell's prediction, run the following snippet e.g. when i = 16
