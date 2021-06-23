@@ -207,7 +207,7 @@ orig_state_array = [1:1:size(Neuron_head,1)]';
 if exist('landmark_to_neuron_map','var')
     clamped_neurons = landmark_to_neuron_map;
 end
-node_label = duplicate_labels(curr_labels,X,Y,Z,PA_matrix,LR_matrix,DV_matrix,geo_dist,geo_dist_r,thisimage_r,mu_r,Neuron_head,lambda_geo,clamped_neurons);
+node_label = duplicate_labels(curr_labels,X,Y,Z,PA_matrix,LR_matrix,DV_matrix,geo_dist,geo_dist_r,img_1,mu_r,Neuron_head,lambda_geo,clamped_neurons);
 cnt = 2;
 while find(node_label(:,1) == 0)
     assigned_nodes = find(node_label(:,1) ~= 0);
@@ -254,7 +254,7 @@ while find(node_label(:,1) == 0)
 %     landmarkMatchScore = compare_labels_of_hidden_landmarks(curr_labels,rand_selection,landmark_to_neuron_map,landmark_names,thisimage_r,mu_r,Neuron_head,conserved_nodeBel);
 %     landmark_match_score(:,cnt) = landmarkMatchScore;
     
-    node_label = duplicate_labels(curr_labels,X,Y,Z,PA_matrix,LR_matrix,DV_matrix,geo_dist,geo_dist_r,thisimage_r,mu_r,Neuron_head,lambda_geo,clamped_neurons);
+    node_label = duplicate_labels(curr_labels,X,Y,Z,PA_matrix,LR_matrix,DV_matrix,geo_dist,geo_dist_r,img_1,mu_r,Neuron_head,lambda_geo,clamped_neurons);
     cnt = cnt + 1;
 end
 
