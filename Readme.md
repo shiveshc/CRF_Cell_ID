@@ -484,15 +484,27 @@ annotation_CRF_landmark('other',...
 	0)
 ```
 
-Or say we want to annotate identities using only angular relationship features, i.e. weight of only angular relationship feature should be set to 1 and weights of all other features should be set to zero, we run
+Or say we want to annotate identities using only PA, LR, DV and angular relationship features, i.e. weight of only these features should be set to 1 and weights of all other features should be set to zero, we run
 ```
 annotation_CRF_landmark('other',...
 	'sample_run\sample_data1\data_annotation_sample_data1',...
 	'sample_run\sample_data1\results_annotation_sample_data1',...
 	'ap',...
 	0,...
-	'weights',[0,0,0,0,1])
+	'weights',[1,1,1,0,1])
 ```
+We get the following output in terminal
+
+```
+1. Created axes
+2. Created node potentials
+3. Created edge potentials
+4. Starting optimization
+5. Resolving duplicates and re-running optimization
+6. Saving prediction
+```
+
+An output file is saved in the `out_file` path. Let's take a look at the contents of this file
 
 
 
