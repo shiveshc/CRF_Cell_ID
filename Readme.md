@@ -437,7 +437,7 @@ figure, imshow(max(labeled_img_r, [], 3), cmap, 'border', 'tight')
 <img src = "extra/labeled_img_r.jpg" width=50% >
 
 Similary segmentations of landmark channels can visualized as well using `labeled_img_other_channels` variable. For another task, if you want to visualize how all
-landmark cells, that we manually provided names for or supplied in `preprocess_data` command, map to the main image, run following commands
+landmark cells (that we manually provided names for in landmark channels or supplied in `preprocess_data` command) map to the main image, run following commands
 ```
 figure, imshow(max(img_1, [], 3), [], 'border', 'tight')
 hold on
@@ -447,6 +447,7 @@ for n = 1:size(landmark_to_neuron_map, 1)
 end
 ```
 <img src = "extra/landmark_to_neuron_map.jpg" width=50% >
+
 `CRF_Cell_ID` annotates the identities of all cells keeping the landmark cells' identities fixed and constraining the optimization.
 
 ## 3. Predict identities
