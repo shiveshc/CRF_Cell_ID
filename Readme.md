@@ -533,7 +533,8 @@ visualize_annotation_output(img_1, mu_r, experiments(1).node_label(:, 1), experi
 ```
 <img src = "extra/annotation_output_4.jpg" width=50% >
 
-Some more individial cell prediction results are shown below.
+Some more individual cell prediction results are shown below.
+
 <img src = "extra/annotation_output_1.jpg" width=50% >
 <img src = "extra/annotation_output_2.jpg" width=50% >
 <img src = "extra/annotation_output_3.jpg" width=50% >
