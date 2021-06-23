@@ -436,8 +436,8 @@ figure, imshow(max(labeled_img_r, [], 3), cmap, 'border', 'tight')
 ```
 <img src = "extra/labeled_img_r.jpg" width=50% >
 
-Similary segmentations of landmark channels can visualized as well using `labeled_img_other_channels` variable. For another task, if want to visualize all
-the landmark cells mapped to main image using the landmark names we manually provided or supplied in `preprocess_data` command, run following commands
+Similary segmentations of landmark channels can visualized as well using `labeled_img_other_channels` variable. For another task, if you want to visualize how all
+landmark cells, that we manually provided names for or supplied in `preprocess_data` command, map to the main image, run following commands
 ```
 figure, imshow(max(img_1, [], 3), [], 'border', 'tight')
 hold on
@@ -447,7 +447,7 @@ for n = 1:size(landmark_to_neuron_map, 1)
 end
 ```
 <img src = "extra/landmark_to_neuron_map.jpg" width=50% >
-
+`CRF_Cell_ID` annotates the identities of all cells keeping the landmark cells' identities fixed and constraining the optimization.
 
 ## 3. Predict identities
 Once done with reading and preparing data for annotation, we'll run the core prediction algorithm. The main function to do is `annotation_CRF_landmark`
@@ -483,14 +483,14 @@ annotation_CRF_landmark('other',...
 	0)
 ```
 
-or if we want to tune the weight of features, we run
+Or say we want to annotate identities using only angular relationship features, i.e. weight of only angular relationship feature should be set to 1 and weights of all other features should be set to zero, we run
 ```
 annotation_CRF_landmark('other',...
 	'sample_run\sample_data1\data_annotation_sample_data1',...
 	'sample_run\sample_data1\results_annotation_sample_data1',...
 	'ap',...
 	0,...
-	'weights',[1,1,1,1,1])
+	'weights',[0,0,0,0,1])
 ```
 
 
