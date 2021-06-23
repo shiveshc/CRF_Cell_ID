@@ -29,6 +29,7 @@ This repository contains -
    - [Visualize prediction results](#4-visualize-prediction-results)
 4. [Building data-driven atlas from annotated data](#building-data-driven-atlas-from-annotated-data)
    - [`CRF_Cell_ID` data-driven atlases](#1-CRF_Cell_ID-data-driven-atlases)
+   - [How to build data-driven atlas](#2-how-to-build-data-driven-atlas)
 
 
 
