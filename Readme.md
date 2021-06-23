@@ -518,10 +518,26 @@ node_label		k-by-1 array where k is the number of cells segmented in main image 
 Neuron_head		list of names of all neurons in atlas
 ```
 
-To visualize prediction result for a single cell, run
+To visualize prediction results, use function `visualize_annotation_output` in `Main` as below. First load the dataset generated as output of `preprocess_data` function. This dataset stores the main channel image stack `img_1`, and segmented cell postions `mu_r`. Next, load annotation prediction results i.e. the output of `annotation_CRF_landmark` function.
+
+```
+load('sample_run\sample_data1\data_annotation_sample_data1.mat')
+load('sample_run\sample_data1\data_annotation_sample_data1.mat')
 ```
 
+Then, to visualize ith cell's prediction, run the following snippet e.g. when i = 16
 
+```
+visualize_annotation_output(img_1, mu_r, experiments(1).node_label(:, 1), experiments(1).Neuron_head, 16)
+```
+<img src = "extra/annotation_output_4.jpg" width=50% >
+
+To visualize all cells' prediction simultaneously, use the following snippet
+
+```
+visualize_annotation_output(img_1, mu_r, experiments(1).node_label(:, 1), experiments(1).Neuron_head, [])
+```
+<img src = "extra/annotation_output_all.jpg" width=50% >
 
 
 
