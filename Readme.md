@@ -549,7 +549,10 @@ visualize_annotation_output(img_1, mu_r, experiments(1).node_label(:, 1), experi
 # Building data-driven atlas from annotated data
 
 A key component for achieving high accuracy in cell identity annotation tasks is building data-driven atlases. Such data-driven atlases capture the statistics of positional
-relationships observed in real experimental data. In comparison static atlases such as OpenWorm atlas provide only one snapshot of cell locations and their positional relationships. Data driven atlases built in `CRF_Cell_ID` framework are significantly different than data-driven atlases built by registration based methods in several ways - 
+relationships observed in real experimental data. In comparison static atlases such as OpenWorm atlas provide only one snapshot of cell locations and their positional relationships.
+
+## 1. `CRF_Cell_ID` data-driven atlases
+Data driven atlases built in `CRF_Cell_ID` framework are significantly different than data-driven atlases built by registration based methods in several ways - 
 
 1. While most previous methods build a positional atlas that capture statistics of absolute positions of cells (mean, covariance), in contrast `CRF_Cell_ID` builds positional relationship atlases i.e. AVAL is to anterior to RIS 99% of times in annotated data where as AVAL is anterior to RMDVL only 40% of times in annotated data. In `CRF_Cell_ID`, such atlases are build for several pairwise positional relationships.
 
@@ -562,8 +565,8 @@ relationships observed in real experimental data. In comparison static atlases s
 
 Another important factor to keep in mind for cell annotation is to build complete atlas encompassing all cells. This is because, due to either expression mosaicism or cell detection errors, not all cells may be present in data. But which cells are missing from data is difficult to define a priori. Thus, a complete atlas provides unbiased chance to all cells in data to take any label from atlas. An incomplete atlas is limited in assigning only the labels present in atlas to data while those cells may be missing from data.
 
-
-To build data driven atlas using annotated data, the main function is `update_atlas_based_on_annotation.,` in `Main`. This function compiles all the manually annotated data available using `compile_annotated_data.m`, calculates positional relationship features among cells in annotated data and then updates the OpenWorm atlas or any pre-existing base atlas with new features.
+## 2. How to build data-driven atlas
+To build data driven atlas using annotated data, the main function is `update_atlas_based_on_annotation.m` in `Main`. This function compiles all the manually annotated data available using `compile_annotated_data.m`, calculates positional relationship features among cells in annotated data and then updates the OpenWorm atlas or any pre-existing base atlas with new features.
 
 For this example we'll use the manually annotated data generated using NeuroPAL strains available at `Datasets\NeuroPAL\*`. Paths of annotated data folders must be specified in `compile_annotated_data.m`. Annotated data is stored in two files in these folders - 
 1. `markers` - Marker file generated using Vaa3D that stores X, Y, Z positions of all annotated cells
