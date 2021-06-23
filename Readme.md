@@ -546,6 +546,22 @@ visualize_annotation_output(img_1, mu_r, experiments(1).node_label(:, 1), experi
 ```
 <img src = "extra/annotation_output_all.jpg" width=100% >
 
+# Building data-driven atlas from annotated data
+
+A key component for achieving high accuracy in cell identity annotation tasks is building data-driven atlases. Such data-driven atlases capture the statistics of positional
+relationships observed in real experimental data. In comparison static atlases such as OpenWorm atlas provide only one snapshot of cell locations and their positional relationships. Data driven atlases built in `CRF_Cell_ID` framework are significantly different than data-driven atlases built by other methods in several ways - 
+
+1. While most previous methods build a positional atlas that capture statistics of absolute positions of cells (mean, covariance), in contrast `CRF_Cell_ID` builds positional relationship atlases i.e. AVAL is to anterior to RIS 99% of times in annotated data where as AVAL is anterior to RMDVL only 40% of times in annotated data. In `CRF_Cell_ID`, such atlases are build for several pairwise positional relationships.
+
+2. Building positional relationship atlas in `CRF_Cell_ID` is extremely computationally efficient as it requires only averaging operations across annotated. Thus atlas can be built from potentially 1000s of images. In comparison, building positional atlas in registration based methods requires batch-wise or simultaneous registations of multiple point clouds that may affect scalability.
+
+3. Data driven atlases in `CRF_Cell_ID` can be built incrementally on the go as more annotated becomes available (due to simple averaging operations needed). In comparison, for building registration based atlases, which frame is chosen as initialization frame or in what order blocks of point clouds are registered may introduce artifacts in atlas.
+
+4. Finally, `CRF_Cell_ID` can utilize partially annotated data or data from strains that mark as low as 2 cells to update data-driven atlas. This is because only positional relationships need to be measured between cells. In comparison, such data cannot be used for registration based atlas because it'll be difficult to register just two cell point cloud to full atlas point cloud.
+
+
+Another important factor to keep in mind for cell annotation is to build complete atlas encompassing all cells. This is because, due to either expression mosaicism or cell detection errors, not all cells may be present in data. But which cells are missing from data is difficult to define apriori. Thus a complete atlas provides unbiased chance to all cells in data to take any label. An incomplete atlas is limited in assigning the labels only present in atlas to data while those cells may be missing from data.
+
 
 
 
