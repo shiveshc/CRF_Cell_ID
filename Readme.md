@@ -577,6 +577,16 @@ To build a data driven atlas, run
 update_atlas_based_on_annotation
 ```
 
+You should see the following output in terminal and an annotation updated atlas will be saved in outpath specified in `update_atlas_based_on_annotation.m`, `'sample_run\` in this case
+```
+1. Loading OpenWorm atlas
+2. Compiling annotated data
+98 unique neurons found in annotated data
+3. Calculating positional relationship features in annotated data
+4. Updating OpenWorm atlas with features calculated from annotated data
+5. Saving results
+```
+
 
 
 
