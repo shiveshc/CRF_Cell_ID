@@ -27,7 +27,8 @@ This repository contains -
      - [Output files](#4-output-files)
    - [Predict identities](#3-predict-identities)
    - [Visualize prediction results](#4-visualize-prediction-results)
-4. Building data-driven atlas from annotated data
+4. [Building data-driven atlas from annotated data](#building-data-driven-atlas-from-annotated-data)
+   - [`CRF_Cell_ID` data-driven atlases](#1-CRF_Cell_ID-data-driven-atlases)
 
 
 
