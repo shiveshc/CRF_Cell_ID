@@ -430,9 +430,9 @@ specify_PA				an internal parameter that tells that 1st PC is to be used for spe
 varargin				3D img stack of all landmark channels provided as input in preprocess_data command
 ```
 
-e.g. if you wish to visualize how the segmentation of the `image2' looks, simply run
+You can use these variables for lot of useful tasks. e.g. if you wish to visualize how the segmentation of the `image2' looks, simply run
 ```
-figure, imshow(max(img_1, [], 3), cmap, 'border', 'tight')
+figure, imshow(max(labeled_img_r, [], 3), cmap, 'border', 'tight')
 ```
 <img src = "extra/labeled_img_r.png" width=50% >
 
