@@ -513,8 +513,8 @@ load('sample_run\sample_data1\results_annotation_sample_data1.mat')
 In the file a struct (structured matlab object) named `experiments` is saved. This object stores metadata of parameters used for optimization and final assigned identities to cells. Two most important variables for us for visualizing predictions are
 
 ```
-node_label		k-by-1 array where k is the number of cells segmented in main image channel. Each entry in this vector corresponds to the index of 
-			cell in atlas whose name is assigned to current cell in data.
+node_label		k-by-1 array where k is the number of cells segmented in main image channel. Each entry in this 
+			vector corresponds to the index of cell in atlas whose name is assigned to current cell in data.
 Neuron_head		list of names of all neurons in atlas
 ```
 
