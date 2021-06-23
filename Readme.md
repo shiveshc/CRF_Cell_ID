@@ -430,11 +430,22 @@ specify_PA				an internal parameter that tells that 1st PC is to be used for spe
 varargin				3D img stack of all landmark channels provided as input in preprocess_data command
 ```
 
-You can use these variables for lot of useful tasks. e.g. if you wish to visualize how the segmentation of the `image2' looks, simply run
+You can use these variables for a lot of useful tasks. e.g. if you wish to visualize how the segmentation of the `image2` looks, simply run
 ```
 figure, imshow(max(labeled_img_r, [], 3), cmap, 'border', 'tight')
 ```
-<img src = "extra/labeled_img_r.png" width=50% >
+<img src = "extra/labeled_img_r.jpg" width=50% >
+
+Similary segmentations of landmark channels can visualized as well using `labeled_img_other_channels` variable. For another task, if want to visualize all
+the landmark cells mapped to main image using the landmark names we manually provided or supplied in `preprocess_data` command, run following commands
+```
+figure, imshow(max(img1, [], 3), [], 'border', 'tight')
+hold on
+for i = 1:size(landmark_to_neuron_map, 1)
+	scatter(mu_r(landmark_to_neuron_map(n, 1), 2), mu_r(landmark_to_neuron_map(n, 1), 1), '.r')
+	text(mu_r(landmark_to_neuron_map(n, 1), 2) + 3, mu_r(landmark_to_neuron_map(n, 1) + 3, landmark_names{n, 1}, 'FontColor', 'w')
+end
+```
 
 
 ## 3. Predict identities
