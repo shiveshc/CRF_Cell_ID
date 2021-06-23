@@ -515,7 +515,7 @@ In the file a struct (structured matlab object) named `experiments` is saved. Th
 ```
 node_label		k-by-1 array where k is the number of cells segmented in main image channel. Each entry in this 
 			vector corresponds to the index of cell in atlas whose name is assigned to current cell in data.
-Neuron_head		list of names of all neurons in atlas
+Neuron_head		list of names of all neurons in atlas. These labels/names were candidate labels for each cell.
 ```
 
 To visualize prediction results, use function `visualize_annotation_output` in `Main` as below. First load the dataset generated as output of `preprocess_data` function. This dataset stores the main channel image stack `img_1`, and segmented cell postions `mu_r`. Next, load annotation prediction results i.e. the output of `annotation_CRF_landmark` function.
