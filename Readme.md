@@ -23,7 +23,7 @@ This repository contains -
    - [Preprocess data for annotation](#2-preprocess-data-for-annotation)
      - [Detecting cells in image channels](#1-detecting-cells-in-image-channels)
      - [Specifying landmarks](#2-specifying-landmarks-in-image-channels)
-     - [Selecting axes speciying cells](#3-select-axes-specifying-cells)
+     - [Selecting axes specifying cells](#3-select-axes-specifying-cells)
      - [Output files](#4-output-files)
    - [Predict identities](#3-predict-identities)
    - [Visualize prediction results](#4-visualize-prediction-results)
