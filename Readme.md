@@ -26,7 +26,7 @@ This repository contains -
      - [Selecting axes speciying cells](#3-select-axes-specifying-cells)
      - [Output files](#4-output-files)
    - [Predict identities](#3-predict-identities)
-   - Visualize prediction results
+   - [Visualize prediction results](#4-visualize-prediction-results)
 4. Building data-driven atlas from annotated data
 
 
@@ -518,6 +518,7 @@ node_label		k-by-1 array where k is the number of cells segmented in main image 
 Neuron_head		list of names of all neurons in atlas. These labels/names were candidate labels for each cell.
 ```
 
+## 4. Visualize prediction results
 To visualize prediction results, use function `visualize_annotation_output` in `Main` as below. First load the dataset generated as output of `preprocess_data` function. This dataset stores the main channel image stack `img_1`, and segmented cell postions `mu_r`. Next, load annotation prediction results i.e. the output of `annotation_CRF_landmark` function.
 
 ```
