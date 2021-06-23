@@ -558,9 +558,9 @@ Data driven atlases built in `CRF_Cell_ID` framework are significantly different
 
 1. While most previous methods build a positional atlas that capture statistics of absolute positions of cells (mean, covariance), in contrast `CRF_Cell_ID` builds positional relationship atlases i.e. AVAL is to anterior to RIS 99% of times in annotated data where as AVAL is anterior to RMDVL only 40% of times in annotated data. In `CRF_Cell_ID`, such atlases are build for several pairwise positional relationships.
 
-2. Building positional relationship atlas in `CRF_Cell_ID` is extremely computationally efficient as it requires only averaging operations. Thus, atlas can be built from potentially 1000s of images. In comparison, building positional atlas in registration based methods requires batch-wise or simultaneous registations of multiple point clouds that may affect scalability.
+2. Building positional relationship atlas in `CRF_Cell_ID` is extremely computationally efficient as it requires only averaging operations. Thus, atlas can be built from potentially 1000s of images. In comparison, building positional atlas in registration based methods requires batch-wise or simultaneous registrations of multiple point clouds that may affect scalability.
 
-3. Data driven atlases in `CRF_Cell_ID` can be built incrementally on the go as more annotated becomes available (due to simple averaging operations needed). In comparison, for building registration based atlases, which frame is chosen as initialization frame or in what order blocks of point clouds are registered may introduce artifacts in atlas.
+3. Data driven atlases in `CRF_Cell_ID` can be built incrementally on the go as more annotated data becomes available (due to simple averaging operations needed). In comparison, for building registration based atlases, which frame is chosen as initialization frame or in what order blocks of point clouds are registered may introduce artifacts in atlas.
 
 4. Finally, `CRF_Cell_ID` can utilize partially annotated data or data from strains that mark as low as 2 cells to update data-driven atlas. This is because only positional relationships need to be measured between cells. In comparison, such data cannot be used for registration based atlas because it'll be difficult to register a two cell point cloud to a full 150 cell point cloud.
 
