@@ -439,13 +439,14 @@ figure, imshow(max(labeled_img_r, [], 3), cmap, 'border', 'tight')
 Similary segmentations of landmark channels can visualized as well using `labeled_img_other_channels` variable. For another task, if want to visualize all
 the landmark cells mapped to main image using the landmark names we manually provided or supplied in `preprocess_data` command, run following commands
 ```
-figure, imshow(max(img1, [], 3), [], 'border', 'tight')
+figure, imshow(max(img_1, [], 3), [], 'border', 'tight')
 hold on
-for i = 1:size(landmark_to_neuron_map, 1)
-	scatter(mu_r(landmark_to_neuron_map(n, 1), 2), mu_r(landmark_to_neuron_map(n, 1), 1), '.r')
-	text(mu_r(landmark_to_neuron_map(n, 1), 2) + 3, mu_r(landmark_to_neuron_map(n, 1) + 3, landmark_names{n, 1}, 'FontColor', 'w')
+for n = 1:size(landmark_to_neuron_map, 1)
+	scatter(mu_r(landmark_to_neuron_map(n, 1), 1), mu_r(landmark_to_neuron_map(n, 1), 2), '.r')
+	text(mu_r(landmark_to_neuron_map(n, 1), 1) + 3, mu_r(landmark_to_neuron_map(n, 1), 2) + 3, landmark_names{n, 1}, 'Color', 'w')
 end
 ```
+<img src = "extra/landmark_to_neuron_map.jpg" width=50% >
 
 
 ## 3. Predict identities
